@@ -3,12 +3,10 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
 
-import './App.css';
-
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { books: [] };
+    this.state = { book: 'nothing' };
   }
 
   componentDidMount() {
@@ -26,7 +24,11 @@ class App extends Component {
   }
 
   render() {
-    return <div>{this.state.book}</div>;
+    return (
+      <div className="container">
+        <div className="another">I'm reading {this.state.book} right now.</div>
+      </div>
+    );
   }
 }
 

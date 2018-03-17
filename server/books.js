@@ -1,6 +1,11 @@
-const app = require('./index.js');
+const router = require('./index.js');
+const mongoose = require('mongoose');
 
-app.get('/books', function(req, res, next) {
+// mongoose.connect('mongodb://localhost/my_database');
+
+// const Books = mongoose.model('Books');
+
+router.get('/books', function(req, res, next) {
   res.json([
     {
       _id: 1,

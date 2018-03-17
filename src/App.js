@@ -12,7 +12,7 @@ class App extends Component {
 
   componentDidMount() {
     axios
-      .get('/books')
+      .get('/api/books')
       .then(res => {
         this.setState({ books: res.data[1].name });
       })

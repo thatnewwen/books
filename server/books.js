@@ -8,7 +8,7 @@ const booksSchema = new Schema({
   author: String,
 });
 
-mongoose.connect('mongodb://localhost/book_club');
+mongoose.connect('mongodb://localhost/database_name');
 
 const Books = mongoose.model('Books', booksSchema);
 

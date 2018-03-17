@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
+import _ from 'lodash';
 
 import './App.css';
 
@@ -14,13 +15,18 @@ class App extends Component {
     axios
       .get('/api/books')
       .then(res => {
-        this.setState({ books: res.data[1].name });
+        const books = res.data;
+        const book = _.first(books);
+
+        if (book) {
+          this.setState({ book: book.name });
+        }
       })
       .catch();
   }
 
   render() {
-    return <div>{this.state.books}</div>;
+    return <div>{this.state.book}</div>;
   }
 }
 

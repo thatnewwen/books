@@ -1,19 +1,19 @@
 const router = require('./index.js');
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-// mongoose.connect('mongodb://localhost/my_database');
+const booksSchema = new Schema({
+  _id: Schema.Types.ObjectId,
+  title: String,
+  author: String,
+});
 
-// const Books = mongoose.model('Books');
+mongoose.connect('mongodb://localhost/book_club');
 
-router.get('/books', function(req, res, next) {
-  res.json([
-    {
-      _id: 1,
-      name: 'Some book 1',
-    },
-    {
-      _id: 2,
-      name: 'Another book',
-    },
-  ]);
+const Books = mongoose.model('Books', booksSchema);
+
+router.get('/books', (req, res, next) => {
+  Books.find().then(books => {
+    res.json(books);
+  });
 });

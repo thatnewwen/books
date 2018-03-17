@@ -19,7 +19,7 @@ class App extends Component {
         const book = _.first(books);
 
         if (book) {
-          this.setState({ book: book.name });
+          this.setState({ book: book.title });
         }
       })
       .catch();

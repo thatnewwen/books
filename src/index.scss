@@ -3,10 +3,19 @@ $blue: #6b9f9f;
 $cream: #e5d3b5;
 $white: #ffffff;
 
+$serif: Georgia;
 $sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans,
   Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 
-$serif: Georgia;
+$page-width: 1000px;
+
+$text-7: 35px;
+$text-6: 29px;
+$text-5: 24px;
+$text-4: 20px;
+$text-3: 16px;
+$text-2: 14px;
+$text-1: 12px;
 
 html,
 body,
@@ -143,7 +152,7 @@ body {
   font-kerning: normal;
   font-variant-ligatures: common-ligatures;
   line-height: 1.43;
-  font-size: 16px;
+  font-size: $text-3;
   margin: 0;
   padding: 0;
   color: $dark;
@@ -152,5 +161,10 @@ body {
 
 a {
   color: $dark;
-  font-family: $sans-serif;
+}
+
+.page-container {
+  width: $page-width;
+  margin: 0 auto;
+  padding: 2em;
 }

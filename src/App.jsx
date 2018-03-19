@@ -31,26 +31,20 @@ class App extends Component {
         <div>
           <Navbar />
 
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
+          <div className="page-container">
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
 
-          <div> I'm reading {this.state.book} right now. </div>
+            <div> I'm reading {this.state.book} right now. </div>
+          </div>
         </div>
       </Router>
     );
   }
 }
 
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-);
+const Home = () => <div>Hello!</div>;
 
-const Login = () => (
-  <div>
-    <h2>Login</h2>
-  </div>
-);
+const Login = () => <div>You are not logged in.</div>;
 
 export default App;

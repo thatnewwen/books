@@ -7,9 +7,10 @@ class Navbar extends Component {
   render() {
     return (
       <ul className="navbar">
-        <li>
-          <Link to="/">Home</Link>
-        </li>
+        <Link to="/" class="brand">
+          BookClub
+        </Link>
+
         <li>
           <Link to="/login">Login</Link>
         </li>

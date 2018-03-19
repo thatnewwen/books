@@ -1,6 +1,19 @@
+@import 'index.scss';
+
 .navbar {
   display: flex;
-  justify-content: space-between;
-  padding: 1em;
+  padding: 0 1em;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  justify-content: flex-end;
+
+  a {
+    padding: 1em;
+    display: block;
+  }
+}
+
+.brand {
+  font-family: $serif;
+  font-weight: 600;
+  margin-right: auto;
 }

@@ -16,6 +16,7 @@ class App extends Component {
       .get('/api/books')
       .then(res => {
         const books = res.data;
+        console.log(books);
         const book = _.first(books);
 
         if (book) {
@@ -32,7 +33,7 @@ class App extends Component {
           <Navbar />
 
           <div className="page-container">
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Landing} />
             <Route path="/login" component={Login} />
 
             <div> I'm reading {this.state.book} right now. </div>
@@ -43,7 +44,12 @@ class App extends Component {
   }
 }
 
-const Home = () => <div>Hello!</div>;
+const Landing = () => (
+  <h1>
+    What are you reading? <span className="link"> Start a diary </span> and tell
+    your friends…
+  </h1>
+);
 
 const Login = () => <div>You are not logged in.</div>;
 

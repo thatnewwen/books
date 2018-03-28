@@ -8,7 +8,7 @@ class Navbar extends Component {
     return (
       <div className="navbar-container">
         <ul className="navbar">
-          <Link to="/" class="brand">
+          <Link to="/" className="brand">
             BookClub
           </Link>
 

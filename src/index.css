@@ -135,6 +135,9 @@ body {
 a {
   color: #2c3340; }
 
+.link {
+  text-decoration: underline; }
+
 .page-container {
   width: 1000px;
   margin: 0 auto;

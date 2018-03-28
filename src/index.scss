@@ -163,6 +163,10 @@ a {
   color: $dark;
 }
 
+.link {
+  text-decoration: underline;
+}
+
 .page-container {
   width: $page-width;
   margin: 0 auto;

@@ -16,7 +16,7 @@ class App extends Component {
       .get('/api/books')
       .then(res => {
         const books = res.data;
-        const book = _.first(books);
+        const book = _.sample(books);
 
         if (book) {
           this.setState({ book: `"${book.title_suggest}"` });

@@ -8,7 +8,10 @@ import _ from 'lodash';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { book: 'nothing' };
+    this.state = {
+      title: 'nothing',
+      author: ['no one'],
+    };
   }
 
   componentDidMount() {
@@ -19,7 +22,10 @@ class App extends Component {
         const book = _.sample(books);
 
         if (book) {
-          this.setState({ book: `"${book.title}"` });
+          this.setState({
+            title: `"${book.title}"`,
+            author: _.first(book.author_name),
+          });
         }
       })
       .catch();
@@ -35,7 +41,9 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <Route path="/login" component={Login} />
 
-            <div> I'm reading {this.state.book} right now. </div>
+            <div>
+              I'm reading {this.state.title} by {this.state.author} right now.
+            </div>
           </div>
         </div>
       </Router>

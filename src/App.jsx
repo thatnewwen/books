@@ -19,7 +19,7 @@ class App extends Component {
         const book = _.sample(books);
 
         if (book) {
-          this.setState({ book: `"${book.title_suggest}"` });
+          this.setState({ book: `"${book.title}"` });
         }
       })
       .catch();

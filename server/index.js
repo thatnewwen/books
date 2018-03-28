@@ -20,8 +20,8 @@ app.use('/api', router);
 
 module.exports = router;
 
-// Setup
-// require('./samples.js');
+// Setup sample data
+require('./samples.js');
 
 // Endpoints
 require('./books.js');

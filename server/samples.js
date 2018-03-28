@@ -3,8 +3,10 @@ const Books = require('./books.js');
 Books.count()
   .limit(1)
   .then(hasBooks => {
+    Books.remove();
+
     if (!hasBooks) {
-      Books.insert(sampleBooks);
+      Books.insertMany(sampleBooks);
     }
   });
 

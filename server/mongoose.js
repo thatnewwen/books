@@ -8,7 +8,7 @@ function upsertTimestamps(schema) {
     updatedAt: Date,
   });
 
-  schema.pre('create', next => {
+  schema.pre('save', next => {
     this.createdAt = new Date();
     next();
   });

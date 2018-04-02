@@ -13,7 +13,6 @@ const Books = mongoose.model('Books', booksSchema);
 
 router.get('/books', (req, res, next) => {
   Books.find().then(books => {
-    console.log(books);
     res.json(books);
   });
 });

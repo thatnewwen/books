@@ -53,11 +53,3 @@ usersSchema.statics = {
 const Users = mongoose.model('Users', usersSchema);
 
 passport.use(new LocalStrategy(Users.authenticate));
-
-app.post('/login', (req, res, next) => {
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true,
-  });
-});

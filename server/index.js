@@ -1,11 +1,9 @@
 const express = require('express');
 const path = require('path');
-const passport = require('passport');
+// const passport = require('passport');
 
 const app = express();
 const router = express.Router();
-
-require('./samples.js');
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
@@ -19,7 +17,9 @@ app.use('/api', router);
 
 module.exports = router;
 
-app.use(passport.initialize());
+// app.use(passport.initialize());
+
+require('./samples.js');
 
 // Endpoints
 require('./books.js');

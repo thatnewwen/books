@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Navbar from './navbar/Navbar';
+import Login from './login/Login';
 
 import axios from 'axios';
 import _ from 'lodash';
@@ -57,7 +58,5 @@ const Landing = () => (
     your friends…
   </h1>
 );
-
-const Login = () => <div>You are not logged in.</div>;
 
 export default App;

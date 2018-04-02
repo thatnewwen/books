@@ -1,5 +1,6 @@
 const router = require('./index.js');
 const mongoose = require('./mongoose.js');
+
 const Schema = mongoose.Schema;
 
 const booksSchema = new Schema({
@@ -11,7 +12,7 @@ const booksSchema = new Schema({
 
 const Books = mongoose.model('Books', booksSchema);
 
-router.get('/books', (req, res, next) => {
+router.get('/books', (req, res) => {
   Books.find().then(books => {
     res.json(books);
   });

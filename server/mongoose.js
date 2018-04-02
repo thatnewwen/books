@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/bookclub');
 
-function upsertTimestamps(schema, options) {
+function upsertTimestamps(schema) {
   schema.add({
     createdAt: Date,
     updatedAt: Date,
@@ -13,14 +13,10 @@ function upsertTimestamps(schema, options) {
     next();
   });
 
-  schema.pre('save', next => {
+  schema.pre('update', next => {
     this.updatedAt = new Date();
     next();
   });
-
-  if (options && options.index) {
-    schema.path('upsertTimestamps').index(options.index);
-  }
 }
 
 mongoose.plugin(upsertTimestamps);

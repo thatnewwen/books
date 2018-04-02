@@ -1,8 +1,9 @@
 const mongoose = require('./mongoose.js');
-const Schema = mongoose.Schema;
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+
+const Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
   username: String,

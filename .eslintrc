@@ -6,8 +6,10 @@
     "jest": true
   },
   "extends": [
-    "airbnb",
     "eslint:recommended",
+    "react",
+    "import",
+    "jsx-a11y",
   ],
   "rules": {
     // We want to use index.js from create-react-app

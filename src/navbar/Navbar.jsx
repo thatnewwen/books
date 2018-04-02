@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './Navbar.css';
 
-const Navbar = function() {
+function Navbar() {
   return (
     <div className="navbar-container">
       <ul className="navbar">
@@ -17,6 +17,6 @@ const Navbar = function() {
       </ul>
     </div>
   );
-};
+}
 
 export default Navbar;

@@ -7,12 +7,12 @@ const Navbar = function() {
   return (
     <div className="navbar-container">
       <ul className="navbar">
-        <Link href="/" className="brand">
+        <Link to="/" className="brand">
           BookClub
         </Link>
 
         <li>
-          <Link href="/login">Login</Link>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
     </div>

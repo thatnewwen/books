@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Login extends Component {
+  // login() {
+  //   axios.post(
+  //     '/login',
+  //     passport.authenticate('local', {
+  //       successRedirect: '/',
+  //       failureRedirect: '/login',
+  //       failureFlash: true,
+  //     })
+  //   );
+  // }
+
   render() {
     return (
       <form action="/login" method="post">

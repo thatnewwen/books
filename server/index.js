@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
+const passport = require('passport');
+
 const app = express();
+
+require('./samples.js');
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
@@ -20,8 +24,7 @@ app.use('/api', router);
 
 module.exports = router;
 
-// Setup sample data
-require('./samples.js');
+app.use(passport.initialize());
 
 // Endpoints
 require('./books.js');

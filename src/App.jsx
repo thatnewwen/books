@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Navbar from './navbar/Navbar';
-import Login from './login/Login';
-
 import axios from 'axios';
 import _ from 'lodash';
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+import Navbar from './navbar/Navbar';
+import Login from './login/Login';
 
 class App extends Component {
   constructor(props) {
@@ -43,7 +43,7 @@ class App extends Component {
             <Route path="/login" component={Login} />
 
             <div>
-              I'm reading {this.state.title} by {this.state.author} right now.
+              I am reading {this.state.title} by {this.state.author} right now.
             </div>
           </div>
         </div>

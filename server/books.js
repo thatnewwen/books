@@ -1,4 +1,4 @@
-const router = require('./index.js');
+const { router } = require('./index.js');
 const mongoose = require('./mongoose.js');
 
 const Schema = mongoose.Schema;

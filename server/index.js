@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-// const passport = require('passport');
+const passport = require('passport');
 
 const app = express();
 const router = express.Router();
@@ -13,13 +13,13 @@ app.get('/', (req, res) => {
 
 app.listen(process.env.PORT || 8080);
 
+app.use(passport.initialize());
 app.use('/api', router);
 
-module.exports = router;
-
-// app.use(passport.initialize());
+module.exports = { app, router };
 
 require('./samples.js');
+require('./users.js');
 
 // Endpoints
 require('./books.js');

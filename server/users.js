@@ -2,7 +2,12 @@ const mongoose = require('./mongoose.js');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const passportJWT = require('passport-jwt');
+const { app } = require('./index.js');
 
+const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 const Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
@@ -54,3 +59,47 @@ usersSchema.statics = {
 const Users = mongoose.model('Users', usersSchema);
 
 passport.use(new LocalStrategy(Users.authenticate));
+
+passport.use(
+  new JWTStrategy(
+    {
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+      secretOrKey: 'your_jwt_secret',
+    },
+    function(jwtPayload, cb) {
+      return Users.findOneById(jwtPayload.id)
+        .then(user => {
+          return cb(null, user);
+        })
+        .catch(err => {
+          return cb(err);
+        });
+    }
+  )
+);
+
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
+    if (err || !user) {
+      return res.status(400).json({
+        message: 'Something is not right',
+        user: user,
+      });
+    }
+
+    req.login(user, { session: false }, err => {
+      if (err) {
+        res.send(err);
+      }
+
+      const token = jwt.sign(user, 'your_jwt_secret');
+
+      return res.json({ user, token });
+    });
+  })(req, res);
+});
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
+});

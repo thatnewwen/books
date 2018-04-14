@@ -16,20 +16,25 @@ const usersSchema = new Schema({
 });
 
 usersSchema.pre('save', next => {
-  const saltRounds = 10;
+  if (this.isNew) {
+    const saltRounds = 10;
 
-  bcrypt.hash(this.password, saltRounds, (err, hashedPassword) => {
-    if (err) {
-      return next(err);
-    }
+    bcrypt.hash(this.password, saltRounds, (err, hashedPassword) => {
+      if (err) {
+        return next(err);
+      }
 
-    this.password = hashedPassword;
-    next();
-  });
+      this.password = hashedPassword;
+      next();
+    });
+  }
+
+  next();
 });
 
 usersSchema.statics = {
   authenticate(username, password, done) {
+    console.log('CMONNNN');
     this.findOne({ username })
       .then(user => {
         if (!user) {
@@ -66,14 +71,10 @@ passport.use(
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: 'your_jwt_secret',
     },
-    function(jwtPayload, cb) {
+    (jwtPayload, done) => {
       return Users.findOneById(jwtPayload.id)
-        .then(user => {
-          return cb(null, user);
-        })
-        .catch(err => {
-          return cb(err);
-        });
+        .then(user => done(null, user))
+        .catch(err => done(err));
     }
   )
 );
@@ -83,7 +84,7 @@ app.post('/login', (req, res, next) => {
     if (err || !user) {
       return res.status(400).json({
         message: 'Something is not right',
-        user: user,
+        user,
       });
     }
 
@@ -103,3 +104,5 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/login');
 });
+
+module.exports = Users;

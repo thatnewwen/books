@@ -1,11 +1,27 @@
 const Books = require('./books.js');
+const Users = require('./users.js');
+
+Users.count()
+  .limit(1)
+  .then(hasDocs => {
+    Users.remove();
+
+    if (!hasDocs) {
+      const testUser = new Users({
+        username: 'test@gmail.com',
+        password: 'test123',
+      });
+
+      testUser.save();
+    }
+  });
 
 Books.count()
   .limit(1)
-  .then(hasBooks => {
+  .then(hasDocs => {
     Books.remove();
 
-    if (!hasBooks) {
+    if (!hasDocs) {
       Books.insertMany(sampleBooks);
     }
   });

@@ -43,7 +43,7 @@ class Landing extends Component {
       .then(res => {
         console.log(res);
       })
-      .catch(error => console.log(error));
+      .catch();
 
     axios
       .get('/api/books')
@@ -76,7 +76,29 @@ class Landing extends Component {
   }
 }
 
-const Profile = () => <h1> Who me? </h1>;
+class Profile extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { user: null };
+  }
+
+  componentDidMount() {
+    axios
+      .get('/user/profile')
+      .then(res => {
+        this.setState({ user: res.data });
+      })
+      .catch();
+  }
+
+  render() {
+    return (
+      <div>
+        I am {this.state.user ? this.state.user.username : 'not logged in'}.
+      </div>
+    );
+  }
+}
 
 const NotFound = () => (
   <h1>Whoops! We can't find the page you're looking for.</h1>

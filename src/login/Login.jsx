@@ -44,7 +44,8 @@ const Login = withFormik({
       .post('/login', values)
       .then(res => {
         setSubmitting(false);
-        console.log(res);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${res.data
+          .token}`;
       })
       .catch(() => setSubmitting(false));
   },

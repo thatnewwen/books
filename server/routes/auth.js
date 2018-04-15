@@ -45,7 +45,7 @@ passport.use(
       secretOrKey: 'replace_this_with_envs',
     },
     (jwtPayload, done) => {
-      return Users.findOneById(jwtPayload.id)
+      return Users.findOne({ _id: jwtPayload._id })
         .then(user => done(null, user))
         .catch(err => done(err));
     }
@@ -55,20 +55,18 @@ passport.use(
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
-      return res.status(400);
+      res.status(400).send();
+    } else {
+      req.login(user, { session: false }, err => {
+        if (err) {
+          res.status(400).send();
+        }
+
+        const token = jwt.sign(user, 'replace_this_with_envs');
+
+        return res.json({ user, token }).send();
+      });
     }
-
-    req.login(user, { session: false }, err => {
-      if (err) {
-        res.status(400).send();
-      }
-
-      const token = jwt.sign(user, 'replace_this_with_envs');
-
-      res.redirect('/');
-
-      return res.json({ user, token });
-    });
   })(req, res);
 });
 

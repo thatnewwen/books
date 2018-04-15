@@ -1,5 +1,5 @@
-const Books = require('./books.js');
-const Users = require('./users.js');
+const Books = require('./models/books.js');
+const Users = require('./models/users.js');
 
 Users.remove({}).then(() => {
   const testUser = new Users({

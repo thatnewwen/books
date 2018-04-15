@@ -3,8 +3,6 @@ const path = require('path');
 const passport = require('passport');
 
 const app = express();
-const router = express.Router();
-
 var bodyParser = require('body-parser');
 
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
@@ -14,14 +12,11 @@ app.get('/', (req, res) => {
 });
 
 app.listen(process.env.PORT || 8080);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
-app.use('/api', router);
 
-module.exports = { app, router };
+module.exports = app;
 
 require('./samples.js');
-require('./users.js');
-
-// Endpoints
-require('./books.js');
+require('./routes/routes.js');

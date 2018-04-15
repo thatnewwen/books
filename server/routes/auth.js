@@ -1,36 +1,13 @@
-const mongoose = require('./mongoose.js');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const passportJWT = require('passport-jwt');
-const { app } = require('./index.js');
+const jwt = require('jsonwebtoken');
 
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
-const Schema = mongoose.Schema;
-
-const usersSchema = new Schema({
-  username: String,
-  password: String,
-});
-
-usersSchema.pre('save', function(next) {
-  if (this.isNew) {
-    const saltRounds = 10;
-    bcrypt.hash(this.password, saltRounds, (err, hashedPassword) => {
-      if (err) {
-        return next(err);
-      }
-      this.password = hashedPassword;
-      next();
-    });
-  } else {
-    next();
-  }
-});
-
-const Users = mongoose.model('Users', usersSchema);
+const bcrypt = require('bcrypt');
+const Users = require('../models/users.js');
+const app = require('../index.js');
 
 passport.use(
   new LocalStrategy(function(username, password, done) {
@@ -59,13 +36,11 @@ passport.use(
   })
 );
 
-const ENV_SECRET = 'replace_this_with_envs';
-
 passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: ENV_SECRET,
+      secretOrKey: 'replace_this_with_envs',
     },
     (jwtPayload, done) => {
       return Users.findOneById(jwtPayload.id)
@@ -75,22 +50,18 @@ passport.use(
   )
 );
 
-function respondFailed(res) {
-  res.status(400).send('Authentication failed.');
-}
-
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
-      return respondFailed(res);
+      return res.status(400);
     }
 
     req.login(user, { session: false }, err => {
       if (err) {
-        return respondFailed(res);
+        res.status(400).send();
       }
 
-      const token = jwt.sign(user, ENV_SECRET);
+      const token = jwt.sign(user, 'replace_this_with_envs');
 
       res.redirect('/');
 
@@ -103,5 +74,3 @@ app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/login');
 });
-
-module.exports = Users;

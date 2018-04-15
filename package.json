@@ -31,14 +31,18 @@
     "redux-devtools": "^3.4.1"
   },
   "scripts": {
-    "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
+    "build-css":
+      "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
+    "watch-css":
+      "npm run build-css && node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/ --watch --recursive",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "start-server": "nodemon ./server/index.js",
-    "start-dev": "mongod & npm run start-server & npm run watch-css & npm start"
+    "start-dev":
+      "npm run watch-css & mongod & npm run start-server & npm start",
+    "start-prod": "npm run build & mongod & npm run start-server"
   },
   "proxy": "http://localhost:8080",
   "devDependencies": {

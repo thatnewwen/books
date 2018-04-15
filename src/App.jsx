@@ -2,12 +2,33 @@ import axios from 'axios';
 import _ from 'lodash';
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './navbar/Navbar';
 import Login from './login/Login';
 
 class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <Navbar />
+
+          <div className="page-container">
+            <Switch>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/user/profile" component={Profile} />
+              <Route component={NotFound} />
+            </Switch>
+          </div>
+        </div>
+      </Router>
+    );
+  }
+}
+
+class Landing extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35,30 +56,23 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <div>
+        <span> What are you reading? </span>
+        <span className="link">Start a diary</span>
+        <span> and tell your friends… </span>
+
         <div>
-          <Navbar />
-
-          <div className="page-container">
-            <Route exact path="/" component={Landing} />
-            <Route path="/login" component={Login} />
-            <Route path="/user/profile" component={Landing} />
-
-            <div>
-              I am reading {this.state.title} by {this.state.author} right now.
-            </div>
-          </div>
+          I am reading {this.state.title} by {this.state.author} right now.
         </div>
-      </Router>
+      </div>
     );
   }
 }
 
-const Landing = () => (
-  <h1>
-    What are you reading? <span className="link"> Start a diary </span> and tell
-    your friends…
-  </h1>
+const Profile = () => <h1> Who me? </h1>;
+
+const NotFound = () => (
+  <h1>Whoops! We can't find the page you're looking for.</h1>
 );
 
 export default App;

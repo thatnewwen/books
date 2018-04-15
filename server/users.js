@@ -30,10 +30,13 @@ usersSchema.pre("save", function(next) {
   }
 });
 
-usersSchema.statics = {
-  authenticate(username, password, done) {
+const Users = mongoose.model("Users", usersSchema);
+
+passport.use(
+  "local",
+  new LocalStrategy(function(username, password, done) {
     console.log("CMONNNN");
-    this.findOne({ username })
+    Users.findOne({ username })
       .then(user => {
         if (!user) {
           return done(null, false, {
@@ -50,18 +53,13 @@ usersSchema.statics = {
                 message: "Username and password do not match."
               });
             }
-
-            return done(null, user);
+            return done(null, user.username);
           })
           .catch(err => done(err));
       })
       .catch(err => done(err));
-  }
-};
-
-const Users = mongoose.model("Users", usersSchema);
-
-passport.use(new LocalStrategy(Users.authenticate));
+  })
+);
 
 passport.use(
   new JWTStrategy(
@@ -78,24 +76,37 @@ passport.use(
 );
 
 app.post("/login", (req, res, next) => {
-  passport.authenticate("local", { session: false }, (err, user, info) => {
-    if (err || !user) {
-      return res.status(400).json({
-        message: "Something is not right",
-        user
-      });
-    }
-
-    req.login(user, { session: false }, err => {
-      if (err) {
-        res.send(err);
+  console.log(JSON.stringify(req.params));
+  passport.authenticate(
+    "local",
+    {
+      session: false,
+      successRedirect: "/",
+      failureRedirect: "/login",
+      failureFlash: true
+    },
+    (err, user, info) => {
+      if (err || !user) {
+        console.log(err);
+        console.log(user);
+        console.log(info);
+        return res.status(400).json({
+          message: "Something is not right",
+          user
+        });
       }
 
-      const token = jwt.sign(user, "your_jwt_secret");
+      req.login(user, { session: false }, err => {
+        if (err) {
+          res.send(err);
+        }
 
-      return res.json({ user, token });
-    });
-  })(req, res);
+        const token = jwt.sign(user, "your_jwt_secret");
+
+        return res.json({ user, token });
+      });
+    }
+  )(req, res);
 });
 
 app.get("/logout", (req, res) => {

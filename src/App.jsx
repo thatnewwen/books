@@ -1,24 +1,24 @@
-import axios from 'axios';
-import _ from 'lodash';
+import axios from "axios";
+import _ from "lodash";
 
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { Component } from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Navbar from './navbar/Navbar';
-import Login from './login/Login';
+import Navbar from "./navbar/Navbar";
+import Login from "./login/Login";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: 'nothing',
-      author: ['no one'],
+      title: "nothing",
+      author: ["no one"]
     };
   }
 
   componentDidMount() {
     axios
-      .get('/api/books')
+      .get("/api/books")
       .then(res => {
         const books = res.data;
         const book = _.sample(books);
@@ -26,7 +26,7 @@ class App extends Component {
         if (book) {
           this.setState({
             title: `"${book.title}"`,
-            author: _.first(book.author_name),
+            author: _.first(book.author_name)
           });
         }
       })

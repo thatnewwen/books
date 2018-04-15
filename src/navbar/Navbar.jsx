@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { unsetAuthToken } from '../login/Login';
 
 import './Navbar.css';
 
@@ -21,7 +22,13 @@ function Navbar() {
         </li>
 
         <li>
-          <Link to="/login" onClick={() => axios.get('/logout')}>
+          <Link
+            to="/login"
+            onClick={() => {
+              unsetAuthToken();
+              axios.get('/logout');
+            }}
+          >
             Logout
           </Link>
         </li>

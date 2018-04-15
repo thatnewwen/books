@@ -1,5 +1,4 @@
 import axios from 'axios';
-import _ from 'lodash';
 
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -29,41 +28,12 @@ class App extends Component {
 }
 
 class Landing extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: 'nothing',
-      author: ['no one'],
-    };
-  }
-
-  componentDidMount() {
-    axios
-      .get('/api/books')
-      .then(res => {
-        const books = res.data;
-        const book = _.sample(books);
-
-        if (book) {
-          this.setState({
-            title: `"${book.title}"`,
-            author: _.first(book.author_name),
-          });
-        }
-      })
-      .catch();
-  }
-
   render() {
     return (
       <div>
         <span> What are you reading? </span>
         <span className="link">Start a diary</span>
         <span> and tell your friends… </span>
-
-        <div>
-          I am reading {this.state.title} by {this.state.author} right now.
-        </div>
       </div>
     );
   }
@@ -72,7 +42,7 @@ class Landing extends Component {
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: null };
+    this.state = { user: null, books: [] };
   }
 
   componentDidMount() {
@@ -80,15 +50,35 @@ class Profile extends Component {
     axios
       .get('/user/profile')
       .then(res => {
-        this.setState({ user: res.data });
+        const user = res.data;
+
+        this.setState({ user });
+
+        axios
+          .get('/api/books', { params: { bookIds: user.bookIds } })
+          .then(res => {
+            this.setState({ books: res.data });
+          })
+          .catch();
       })
       .catch();
   }
 
   render() {
+    if (!this.state.user) {
+      return <div> Loading... </div>;
+    }
+
     return (
       <div>
-        I am {this.state.user ? this.state.user.username : 'not logged in'}.
+        <div> I am {this.state.user.username}.</div>
+        <div> These are my books: </div>
+        <br />
+        <ul>
+          {this.state.books.map((book, index) => (
+            <li key={index}> {book.title} </li>
+          ))}
+        </ul>
       </div>
     );
   }

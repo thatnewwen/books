@@ -70,6 +70,4 @@ app.post('/login', (req, res, next) => {
   })(req, res);
 });
 
-app.get('/logout', (req, res) => {
-  req.logout();
-});
+app.get('/logout', req => req.logout());

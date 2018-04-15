@@ -1,17 +1,25 @@
 const Books = require('./models/books.js');
 const Users = require('./models/users.js');
-
-Users.remove().then(() => {
-  const testUser = new Users({
-    username: 'test@gmail.com',
-    password: 'test123',
-  });
-
-  testUser.save();
-});
+const _ = require('lodash');
 
 Books.remove().then(() => {
   Books.insertMany(sampleBooks);
+});
+
+Users.remove().then(() => {
+  Books.find()
+    .select('_id')
+    .limit(50)
+    .then(books => {
+      const bookIds = _.map(_.sampleSize(books, 10), '_id');
+      const testUser = new Users({
+        username: 'test@gmail.com',
+        password: 'test123',
+        bookIds,
+      });
+
+      testUser.save();
+    });
 });
 
 const sampleBooks = [

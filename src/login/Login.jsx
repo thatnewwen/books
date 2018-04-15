@@ -57,4 +57,11 @@ export function setAuthToken() {
   }
 }
 
+export function unsetAuthToken() {
+  if (localStorage) {
+    localStorage.removeItem('jwt');
+    axios.defaults.headers.common['Authorization'] = null;
+  }
+}
+
 export default Login;

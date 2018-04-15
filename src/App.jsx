@@ -18,7 +18,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Landing} />
               <Route exact path="/login" component={Login} />
-              <Route exact path="/user/profile" component={Profile} />
+              <Route exact path="/profile" component={Profile} />
               <Route component={NotFound} />
             </Switch>
           </div>
@@ -38,6 +38,13 @@ class Landing extends Component {
   }
 
   componentDidMount() {
+    axios
+      .get('/user/profile')
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => console.log(error));
+
     axios
       .get('/api/books')
       .then(res => {

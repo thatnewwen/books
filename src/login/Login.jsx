@@ -1,21 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
+import axios from 'axios';
+import { withFormik } from 'formik';
 
-class Login extends Component {
-  render() {
-    return (
-      <form method="post" action="/login">
-        <div>
-          <input type="text" name="username" placeholder="Your Email" />
-        </div>
-        <div>
-          <input type="password" name="password" placeholder="Your Password" />
-        </div>
-        <div>
-          <input type="submit" value="Log In" />
-        </div>
-      </form>
-    );
-  }
-}
+const loginForm = props => {
+  const { values, isSubmitting, handleChange, handleSubmit } = props;
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input
+          name="username"
+          type="text"
+          placeholder="Your Email"
+          value={values.email}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div>
+        <input
+          name="password"
+          type="password"
+          placeholder="Your Password"
+          value={values.password}
+          onChange={handleChange}
+        />
+      </div>
+
+      <button type="submit" disabled={isSubmitting}>
+        Log In
+      </button>
+    </form>
+  );
+};
+
+const Login = withFormik({
+  mapPropsToValues() {
+    return { username: '', password: '' };
+  },
+
+  handleSubmit(values, { setSubmitting }) {
+    axios
+      .post('/login', values)
+      .then(res => {
+        setSubmitting(false);
+        console.log(res);
+      })
+      .catch(() => setSubmitting(false));
+  },
+})(loginForm);
 
 export default Login;

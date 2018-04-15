@@ -44,11 +44,17 @@ const Login = withFormik({
       .post('/login', values)
       .then(res => {
         setSubmitting(false);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${res.data
-          .token}`;
+        localStorage.setItem('jwt', res.data.token);
       })
       .catch(() => setSubmitting(false));
   },
 })(loginForm);
+
+export function setAuthToken() {
+  if (localStorage && localStorage.getItem('jwt')) {
+    const jwt = localStorage.getItem('jwt');
+    axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+  }
+}
 
 export default Login;

@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Navbar from './navbar/Navbar';
-import Login from './login/Login';
+import Login, { setAuthToken } from './login/Login';
 
 class App extends Component {
   render() {
@@ -38,13 +38,6 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get('/user/profile')
-      .then(res => {
-        console.log(res);
-      })
-      .catch();
-
     axios
       .get('/api/books')
       .then(res => {
@@ -83,6 +76,7 @@ class Profile extends Component {
   }
 
   componentDidMount() {
+    setAuthToken();
     axios
       .get('/user/profile')
       .then(res => {

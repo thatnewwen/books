@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import passport from "passport";
-import axios from "axios";
+import React, { Component } from 'react';
+import passport from 'passport';
+import axios from 'axios';
 
 class Login extends Component {
   login(event) {
-    const auth = passport.authenticate("local", {
-      successRedirect: "/",
-      failureRedirect: "/login",
-      failureFlash: true
+    const auth = passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true,
     });
-    axios.post("/login", auth);
+    axios.post('/login', auth);
 
     event.preventDefault();
   }

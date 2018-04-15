@@ -1,10 +1,10 @@
-const mongoose = require("./mongoose.js");
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const passportJWT = require("passport-jwt");
-const { app } = require("./index.js");
+const mongoose = require('./mongoose.js');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const passportJWT = require('passport-jwt');
+const { app } = require('./index.js');
 
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
@@ -12,10 +12,10 @@ const Schema = mongoose.Schema;
 
 const usersSchema = new Schema({
   username: String,
-  password: String
+  password: String,
 });
 
-usersSchema.pre("save", function(next) {
+usersSchema.pre('save', function(next) {
   if (this.isNew) {
     const saltRounds = 10;
     bcrypt.hash(this.password, saltRounds, (err, hashedPassword) => {
@@ -30,17 +30,17 @@ usersSchema.pre("save", function(next) {
   }
 });
 
-const Users = mongoose.model("Users", usersSchema);
+const Users = mongoose.model('Users', usersSchema);
 
 passport.use(
-  "local",
+  'local',
   new LocalStrategy(function(username, password, done) {
-    console.log("CMONNNN");
+    console.log('CMONNNN');
     Users.findOne({ username })
       .then(user => {
         if (!user) {
           return done(null, false, {
-            message: "User not found."
+            message: 'User not found.',
           });
         }
 
@@ -50,7 +50,7 @@ passport.use(
           .then(result => {
             if (!result) {
               return done(null, false, {
-                message: "Username and password do not match."
+                message: 'Username and password do not match.',
               });
             }
             return done(null, user.username);
@@ -65,7 +65,7 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "your_jwt_secret"
+      secretOrKey: 'your_jwt_secret',
     },
     (jwtPayload, done) => {
       return Users.findOneById(jwtPayload.id)
@@ -75,15 +75,11 @@ passport.use(
   )
 );
 
-app.post("/login", (req, res, next) => {
-  console.log(JSON.stringify(req.params));
+app.post('/login', (req, res, next) => {
   passport.authenticate(
-    "local",
+    'local',
     {
       session: false,
-      successRedirect: "/",
-      failureRedirect: "/login",
-      failureFlash: true
     },
     (err, user, info) => {
       if (err || !user) {
@@ -91,8 +87,8 @@ app.post("/login", (req, res, next) => {
         console.log(user);
         console.log(info);
         return res.status(400).json({
-          message: "Something is not right",
-          user
+          message: 'Something is not right',
+          user,
         });
       }
 
@@ -101,7 +97,7 @@ app.post("/login", (req, res, next) => {
           res.send(err);
         }
 
-        const token = jwt.sign(user, "your_jwt_secret");
+        const token = jwt.sign(user, 'your_jwt_secret');
 
         return res.json({ user, token });
       });
@@ -109,9 +105,9 @@ app.post("/login", (req, res, next) => {
   )(req, res);
 });
 
-app.get("/logout", (req, res) => {
+app.get('/logout', (req, res) => {
   req.logout();
-  res.redirect("/login");
+  res.redirect('/login');
 });
 
 module.exports = Users;

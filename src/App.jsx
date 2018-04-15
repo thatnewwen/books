@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import Navbar from './navbar/Navbar';
 import Login, { setAuthToken } from './login/Login';
@@ -35,8 +35,11 @@ class Landing extends Component {
           What are you <b>reading</b>?
         </div>
         <div>
-          Let's <span className="link">start a diary</span> and show your
-          friends.
+          Let's
+          <Link to="/login" className="link">
+            start a diary
+          </Link>
+          and show your friends.
         </div>
       </div>
     );
@@ -69,7 +72,7 @@ class Profile extends Component {
 
   render() {
     if (!this.state.isLoaded) {
-      return <div> Loading... </div>;
+      return <div className="book-shelf"> Loading... </div>;
     }
 
     return (

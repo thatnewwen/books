@@ -52,7 +52,7 @@ const Login = withFormik({
       .then(res => {
         setSubmitting(false);
         localStorage.setItem('jwt', res.data.token);
-        history.push('/');
+        history.push('/profile');
       })
       .catch(() => setSubmitting(false));
   },

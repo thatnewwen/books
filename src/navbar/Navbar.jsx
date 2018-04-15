@@ -32,11 +32,30 @@ class Navbar extends Component {
     );
   }
 
+  people() {
+    return (
+      <li>
+        <Link to="/">People</Link>
+      </li>
+    );
+  }
+
+  addBook() {
+    return (
+      <li>
+        <Link to="/" className="light-btn">
+          Add a Book
+        </Link>
+      </li>
+    );
+  }
+
   logout() {
     return (
       <li>
         <Link
           to="/login"
+          className="logout-btn"
           onClick={() => {
             unsetAuthToken();
             axios.get('/logout');
@@ -65,8 +84,10 @@ class Navbar extends Component {
             BookClub
           </Link>
 
-          {this.state.isAuthed ? this.profile() : ''}
           {this.state.isAuthed ? this.logout() : this.login()}
+          {this.state.isAuthed ? this.people() : ''}
+          {this.state.isAuthed ? this.profile() : ''}
+          {this.state.isAuthed ? this.addBook() : ''}
         </ul>
       </div>
     );

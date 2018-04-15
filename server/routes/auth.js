@@ -8,6 +8,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const bcrypt = require('bcrypt');
 const Users = require('../models/users.js');
 const { app } = require('../index.js');
+const _ = require('lodash');
 
 passport.use(
   new LocalStrategy(function(username, password, done) {
@@ -29,8 +30,7 @@ passport.use(
               });
             }
 
-            // Must return a plain object
-            return done(null, user.toObject());
+            return done(null, _.pick(user, ['_id']));
           })
           .catch(err => done(err));
       })

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import './Navbar.css';
 
@@ -18,7 +19,9 @@ function Navbar() {
           <Link to="/user/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/logout">Logout</Link>
+          <Link to="/login" onClick={() => axios.get('/logout')}>
+            Logout
+          </Link>
         </li>
       </ul>
     </div>

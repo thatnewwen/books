@@ -10,6 +10,10 @@ const loginForm = props => {
 
   return (
     <form onSubmit={handleSubmit} className="login-form">
+      <h1 className="login-header">
+        Welcome <br /> Back!
+      </h1>
+
       <div>
         <label for="username"> Username or Email </label>
         <input

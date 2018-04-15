@@ -1,12 +1,11 @@
 @import 'index.scss';
 
 .login-form {
-  width: 350px;
+  width: 400px;
   margin: auto;
-  margin-top: 10vh;
   display: flex;
   flex-direction: column;
-  font-size: 1.1em;
+  font-size: 1.3em;
 
   input {
     width: 100%;
@@ -14,6 +13,7 @@
 
   button {
     margin-top: 2em;
+    font-family: $sans-serif;
   }
 
   label {
@@ -26,4 +26,12 @@
     font-size: 0.8em;
     font-family: $sans-serif;
   }
+}
+
+.login-header {
+  font-size: 3em;
+  text-align: center;
+  border-bottom: 4px solid $blue;
+  padding-bottom: 0.25em;
+  margin-bottom: 0.25em;
 }

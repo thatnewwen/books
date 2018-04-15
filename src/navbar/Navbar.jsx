@@ -1,40 +1,74 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { unsetAuthToken } from '../login/Login';
+import { setAuthToken, unsetAuthToken } from '../login/Login';
 
 import './Navbar.css';
 
-function Navbar() {
-  return (
-    <div className="navbar-container">
-      <ul className="navbar">
-        <Link to="/" className="brand">
-          BookClub
+class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isAuthed: null };
+  }
+
+  componentDidMount() {
+    setAuthToken();
+    axios
+      .get('/user')
+      .then(() => {
+        this.setState({ isAuthed: true });
+      })
+      .catch(() => {
+        this.setState({ isAuthed: false });
+      });
+  }
+
+  profile() {
+    return (
+      <li>
+        <Link to="/profile">Profile</Link>
+      </li>
+    );
+  }
+
+  logout() {
+    return (
+      <li>
+        <Link
+          to="/login"
+          onClick={() => {
+            unsetAuthToken();
+            axios.get('/logout');
+          }}
+        >
+          Logout
         </Link>
+      </li>
+    );
+  }
 
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+  login() {
+    return (
+      <li>
+        <Link to="/login">Login</Link>
+      </li>
+    );
+  }
 
-        <li>
-          <Link to="/profile">Profile</Link>
-        </li>
-
-        <li>
-          <Link
-            to="/login"
-            onClick={() => {
-              unsetAuthToken();
-              axios.get('/logout');
-            }}
-          >
-            Logout
+  render() {
+    return (
+      <div className="navbar-container">
+        <ul className="navbar">
+          <Link to="/" className="brand">
+            BookClub
           </Link>
-        </li>
-      </ul>
-    </div>
-  );
+
+          {this.state.isAuthed ? this.profile() : ''}
+          {this.state.isAuthed ? this.logout() : this.login()}
+        </ul>
+      </div>
+    );
+  }
 }
 
 export default Navbar;

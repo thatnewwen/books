@@ -3,26 +3,28 @@ import axios from 'axios';
 import { withFormik } from 'formik';
 import history from '../history.js';
 
+import './Login.css';
+
 const loginForm = props => {
   const { values, isSubmitting, handleChange, handleSubmit } = props;
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="login-form">
       <div>
+        <label for="username"> Username or Email </label>
         <input
           name="username"
           type="text"
-          placeholder="Your Email"
           value={values.email}
           onChange={handleChange}
         />
       </div>
 
       <div>
+        <label for="password"> Password </label>
         <input
           name="password"
           type="password"
-          placeholder="Your Password"
           value={values.password}
           onChange={handleChange}
         />

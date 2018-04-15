@@ -15,9 +15,7 @@ passport.use(
     Users.findOne({ username })
       .then(user => {
         if (!user) {
-          return done(null, false, {
-            message: 'User not found.',
-          });
+          done(null, false);
         }
 
         // Constant time comparison for security
@@ -25,12 +23,10 @@ passport.use(
           .compare(password, user.password)
           .then(result => {
             if (!result) {
-              return done(null, false, {
-                message: 'Username and password do not match.',
-              });
+              done(null, false);
             }
 
-            return done(null, _.pick(user, ['_id']));
+            done(null, _.pick(user, ['_id']));
           })
           .catch(err => done(err));
       })

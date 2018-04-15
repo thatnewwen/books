@@ -1,0 +1,29 @@
+@import 'index.scss';
+
+.login-form {
+  width: 350px;
+  margin: auto;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1em;
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    margin-top: 2em;
+  }
+
+  label {
+    color: $dark;
+    display: block;
+    margin-top: 1.5em;
+    margin-bottom: 0.2em;
+    margin-left: 0.2em;
+    font-weight: 500;
+    font-size: 0.8em;
+    font-family: $sans-serif;
+  }
+}

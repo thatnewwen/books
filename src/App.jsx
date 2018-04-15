@@ -76,7 +76,9 @@ class Profile extends Component {
         <br />
         <ul>
           {this.state.books.map((book, index) => (
-            <li key={index}> {book.title} </li>
+            <li key={index} className="book-container">
+              {book.title}
+            </li>
           ))}
         </ul>
       </div>

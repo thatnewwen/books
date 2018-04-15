@@ -7,7 +7,7 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const bcrypt = require('bcrypt');
 const Users = require('../models/users.js');
-const { index } = require('../index.js');
+const { app } = require('../index.js');
 
 passport.use(
   new LocalStrategy(function(username, password, done) {
@@ -52,7 +52,7 @@ passport.use(
   )
 );
 
-index.post('/login', (req, res, next) => {
+app.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.status(400);
@@ -72,7 +72,7 @@ index.post('/login', (req, res, next) => {
   })(req, res);
 });
 
-index.get('/logout', (req, res) => {
+app.get('/logout', (req, res) => {
   req.logout();
   res.redirect('/login');
 });

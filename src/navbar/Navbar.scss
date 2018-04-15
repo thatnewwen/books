@@ -1,11 +1,12 @@
 @import 'index.scss';
 
 .navbar-container {
-  box-shadow: 0 2px 4px rgba($dark, 0.05);
+  background-color: rgba($white, 0.1);
 }
 
 .navbar {
   display: flex;
+  align-items: center;
   padding: 0 1em;
   width: $page-width;
   margin: 0 auto;
@@ -16,10 +17,12 @@
     padding: 1em;
     display: block;
   }
-}
 
-.brand {
-  font-family: $serif;
-  font-weight: 600;
-  margin-right: auto;
+  .brand {
+    font-family: $serif;
+    font-weight: 600;
+    margin-right: auto;
+    font-size: 1.2em;
+    padding: 0;
+  }
 }

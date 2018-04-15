@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { setAuthToken, unsetAuthToken } from '../login/Login';
+import history from '../history.js';
 
 import './Navbar.css';
 
@@ -39,6 +40,7 @@ class Navbar extends Component {
           onClick={() => {
             unsetAuthToken();
             axios.get('/logout');
+            history.push('/login');
           }}
         >
           Logout

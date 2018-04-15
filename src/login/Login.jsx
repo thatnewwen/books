@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { withFormik } from 'formik';
+import history from '../history.js';
 
 const loginForm = props => {
   const { values, isSubmitting, handleChange, handleSubmit } = props;
@@ -45,6 +46,7 @@ const Login = withFormik({
       .then(res => {
         setSubmitting(false);
         localStorage.setItem('jwt', res.data.token);
+        history.push('/');
       })
       .catch(() => setSubmitting(false));
   },

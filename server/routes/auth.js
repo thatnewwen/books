@@ -71,4 +71,3 @@ app.post('/login', (req, res, next) => {
 });
 
 app.get('/logout', req => req.logout());
-

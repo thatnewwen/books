@@ -30,10 +30,14 @@ class App extends Component {
 class Landing extends Component {
   render() {
     return (
-      <div>
-        <span> What are you reading? </span>
-        <span className="link">Start a diary</span>
-        <span> and tell your friends… </span>
+      <div className="tagline">
+        <div>
+          What are you <b>reading</b>?
+        </div>
+        <div>
+          Let's <span className="link">start a diary</span> and show your
+          friends.
+        </div>
       </div>
     );
   }
@@ -42,7 +46,7 @@ class Landing extends Component {
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { user: null, books: [] };
+    this.state = { books: [], isLoaded: false };
   }
 
   componentDidMount() {
@@ -51,8 +55,7 @@ class Profile extends Component {
       .get('/user/profile')
       .then(res => {
         const user = res.data;
-
-        this.setState({ user });
+        this.setState({ isLoaded: true });
 
         axios
           .get('/api/books', { params: { bookIds: user.bookIds } })
@@ -65,15 +68,13 @@ class Profile extends Component {
   }
 
   render() {
-    if (!this.state.user) {
+    if (!this.state.isLoaded) {
       return <div> Loading... </div>;
     }
 
     return (
       <div>
-        <div> I am {this.state.user.username}.</div>
-        <div> These are my books: </div>
-        <br />
+        <div className="book-shelf">Your Bookshelf</div>
         <ul>
           {this.state.books.map((book, index) => (
             <li key={index} className="book-container">

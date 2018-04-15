@@ -76,9 +76,6 @@ passport.use(
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
-      console.log(err);
-      console.log(user);
-      console.log(info);
       return res.status(400).json({
         message: 'Something is not right',
         user,
@@ -91,6 +88,8 @@ app.post('/login', (req, res, next) => {
       }
 
       const token = jwt.sign(user, 'your_jwt_secret');
+
+      res.redirect('/');
 
       return res.json({ user, token });
     });

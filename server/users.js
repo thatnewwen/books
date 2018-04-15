@@ -59,11 +59,13 @@ passport.use(
   })
 );
 
+const ENV_SECRET = 'replace_this_with_envs';
+
 passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'your_jwt_secret',
+      secretOrKey: ENV_SECRET,
     },
     (jwtPayload, done) => {
       return Users.findOneById(jwtPayload.id)
@@ -73,21 +75,22 @@ passport.use(
   )
 );
 
+function respondFailed(res) {
+  res.status(400).send('Authentication failed.');
+}
+
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {
     if (err || !user) {
-      return res.status(400).json({
-        message: 'Something is not right',
-        user,
-      });
+      return respondFailed(res);
     }
 
     req.login(user, { session: false }, err => {
       if (err) {
-        res.send(err);
+        return respondFailed(res);
       }
 
-      const token = jwt.sign(user, 'your_jwt_secret');
+      const token = jwt.sign(user, ENV_SECRET);
 
       res.redirect('/');
 

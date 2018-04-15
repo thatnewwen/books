@@ -1,5 +1,4 @@
-const mongoose = require('./mongoose.js');
-const Schema = mongoose.Schema;
+const { mongoose, Schema } = require('./mongoose.js');
 
 const booksSchema = new Schema({
   title: String,

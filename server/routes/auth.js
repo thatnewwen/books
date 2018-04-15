@@ -7,7 +7,7 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const bcrypt = require('bcrypt');
 const Users = require('../models/users.js');
-const app = require('../index.js');
+const { app } = require('../index.js');
 
 passport.use(
   new LocalStrategy(function(username, password, done) {
@@ -28,7 +28,9 @@ passport.use(
                 message: 'Username and password do not match.',
               });
             }
-            return done(null, user.username);
+
+            // Must return a plain object
+            return done(null, user.toObject());
           })
           .catch(err => done(err));
       })

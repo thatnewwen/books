@@ -12,15 +12,19 @@ function upsertTimestamps(schema) {
     if (this.isNew) {
       this.createdAt = new Date();
     }
+
     next();
   });
 
   schema.pre('update', function(next) {
     this.updatedAt = new Date();
+
     next();
   });
 }
 
 mongoose.plugin(upsertTimestamps);
 
-module.exports = mongoose;
+const Schema = mongoose.Schema;
+
+module.exports = { mongoose, Schema };

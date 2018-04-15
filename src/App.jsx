@@ -42,6 +42,7 @@ class App extends Component {
           <div className="page-container">
             <Route exact path="/" component={Landing} />
             <Route path="/login" component={Login} />
+            <Route path="/user/profile" component={Landing} />
 
             <div>
               I am reading {this.state.title} by {this.state.author} right now.

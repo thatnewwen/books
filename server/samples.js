@@ -1,7 +1,7 @@
 const Books = require('./models/books.js');
 const Users = require('./models/users.js');
 
-Users.remove({}).then(() => {
+Users.remove().then(() => {
   const testUser = new Users({
     username: 'test@gmail.com',
     password: 'test123',
@@ -10,7 +10,7 @@ Users.remove({}).then(() => {
   testUser.save();
 });
 
-Books.remove({}).then(() => {
+Books.remove().then(() => {
   Books.insertMany(sampleBooks);
 });
 

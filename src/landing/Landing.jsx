@@ -6,7 +6,7 @@ import './Landing.css';
 class Landing extends Component {
   render() {
     return (
-      <div className="tagline">
+      <div className="landing-header">
         <div>
           What are you <b>reading</b>?
         </div>

@@ -30,12 +30,12 @@ class Profile extends Component {
 
   render() {
     if (!this.state.isLoaded) {
-      return <div className="book-shelf"> Loading... </div>;
+      return <div className="profile-header"> Loading... </div>;
     }
 
     return (
       <div>
-        <div className="book-shelf">Your Bookshelf</div>
+        <div className="profile-header">Your Bookshelf</div>
         <ul>
           {this.state.books.map((book, index) => (
             <li key={index} className="book-container">

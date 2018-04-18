@@ -5,13 +5,13 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  font-size: 1.3em;
+  font-size: $text-5;
 
   input {
     width: 100%;
   }
 
-  button {
+  .btn {
     margin-top: 2em;
     font-family: $sans-serif;
   }
@@ -23,13 +23,13 @@
     margin-bottom: 0.2em;
     margin-left: 0.2em;
     font-weight: 500;
-    font-size: 0.8em;
+    font-size: $text-1;
     font-family: $sans-serif;
   }
 }
 
 .login-header {
-  font-size: 3em;
+  font-size: $text-8;
   text-align: center;
   border-bottom: 4px solid $blue;
   padding-bottom: 0.25em;

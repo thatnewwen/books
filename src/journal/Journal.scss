@@ -1,0 +1,17 @@
+@import 'template.scss';
+
+.journal-editor {
+  font-size: $text-5;
+}
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+a {
+  color: $white;
+}
+

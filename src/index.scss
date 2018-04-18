@@ -154,7 +154,9 @@ a {
   font-weight: 500;
 }
 
-input {
+.input,
+[type='text'],
+[type='password'] {
   transition: 0.2s;
   display: inline-block;
   outline: none;
@@ -176,7 +178,7 @@ input {
   }
 }
 
-button {
+.btn {
   transition: 0.2s;
   display: inline-block;
   outline: none;

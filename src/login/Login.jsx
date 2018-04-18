@@ -34,7 +34,7 @@ const loginForm = props => {
         />
       </div>
 
-      <button type="submit" disabled={isSubmitting}>
+      <button className="btn" type="submit" disabled={isSubmitting}>
         Log In
       </button>
     </form>

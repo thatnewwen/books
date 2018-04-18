@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { setAuthToken } from '../login/Login';
+import { Link } from 'react-router-dom';
 
 import './Profile.css';
 
@@ -38,9 +39,13 @@ class Profile extends Component {
         <div className="profile-header">Your Bookshelf</div>
         <ul>
           {this.state.books.map((book, index) => (
-            <li key={index} className="book-container">
+            <Link
+              to={'/journal/' + book._id}
+              key={index}
+              className="book-container"
+            >
               {book.title}
-            </li>
+            </Link>
           ))}
         </ul>
       </div>

@@ -15,7 +15,7 @@ const loginForm = props => {
       </h1>
 
       <div>
-        <label for="username"> Username or Email </label>
+        <label htmlFor="username"> Username or Email </label>
         <input
           name="username"
           type="text"
@@ -25,7 +25,7 @@ const loginForm = props => {
       </div>
 
       <div>
-        <label for="password"> Password </label>
+        <label htmlFor="password"> Password </label>
         <input
           name="password"
           type="password"

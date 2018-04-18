@@ -14,10 +14,7 @@ class Journal extends Component {
   render() {
     return (
       <div id="journal-editor" className="journal-editor">
-        <p>Hello World!</p>
-        <p>
-          Some initial <strong>bold</strong> text
-        </p>
+        Tell us what you thought...
       </div>
     );
   }

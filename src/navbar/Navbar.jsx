@@ -32,14 +32,6 @@ class Navbar extends Component {
     );
   }
 
-  people() {
-    return (
-      <li>
-        <Link to="/">People</Link>
-      </li>
-    );
-  }
-
   addBook() {
     return (
       <li>
@@ -85,7 +77,6 @@ class Navbar extends Component {
           </Link>
 
           {this.state.isAuthed ? this.logout() : this.login()}
-          {this.state.isAuthed ? this.people() : ''}
           {this.state.isAuthed ? this.profile() : ''}
           {this.state.isAuthed ? this.addBook() : ''}
         </ul>

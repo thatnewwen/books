@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { setAuthToken } from '../login/Login';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
 import './Profile.css';
 
@@ -37,14 +38,15 @@ class Profile extends Component {
     return (
       <div>
         <div className="profile-header">Your Bookshelf</div>
-        <ul>
+        <ul className="book-list">
           {this.state.books.map((book, index) => (
             <Link
               to={'/journal/' + book._id}
               key={index}
               className="book-container"
             >
-              {book.title}
+              <div className="book-title">{book.title}</div>
+              <div className="book-author">{_.first(book.author_name)}</div>
             </Link>
           ))}
         </ul>

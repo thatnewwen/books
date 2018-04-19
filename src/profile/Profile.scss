@@ -10,16 +10,35 @@
   text-shadow: 0 7px 14px rgba($blue, 0.2), 0 3px 6px rgba($blue, 0.3);
 }
 
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .book-container {
-  font-size: $text-5;
-  font-weight: 600;
-  margin-bottom: 1em;
-  margin: 1em auto;
-  padding: 0.8em 1.2em;
+  margin: 1em;
+  padding: 2em;
   background-color: $dark;
-  color: $cream;
   border-radius: 4px;
-  width: 50%;
   box-shadow: 0 7px 14px rgba($blue, 0.2), 0 3px 6px rgba($blue, 0.3);
-  display: block;
+  width: 190px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-title {
+  color: $cream;
+  font-size: $text-4;
+  font-weight: 500;
+}
+
+.book-author {
+  color: $blue;
+  font-size: $text-2;
+  margin-top: 2em;
+  display: flex;
+  margin-left: auto;
 }

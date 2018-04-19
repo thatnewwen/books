@@ -73,7 +73,7 @@ class Navbar extends Component {
       <div className="navbar-container">
         <ul className="navbar">
           <Link to="/" className="brand">
-            BookClub
+            Asterisk
           </Link>
 
           {this.state.isAuthed ? this.logout() : this.login()}

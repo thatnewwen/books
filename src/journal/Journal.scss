@@ -41,3 +41,11 @@ strong {
 em {
   font-style: italic;
 }
+
+.ql-bubble .ql-editor blockquote {
+  border-left-color: rgba($blue, 0.4);
+
+  + blockquote {
+    margin-top: -5px;
+  }
+}

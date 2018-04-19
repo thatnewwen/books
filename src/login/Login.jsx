@@ -19,6 +19,7 @@ const loginForm = props => {
         <input
           name="username"
           type="text"
+          className="input"
           value={values.email}
           onChange={handleChange}
         />
@@ -29,6 +30,7 @@ const loginForm = props => {
         <input
           name="password"
           type="password"
+          className="input"
           value={values.password}
           onChange={handleChange}
         />

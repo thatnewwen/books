@@ -1,0 +1,21 @@
+@import 'template.scss';
+
+.landing-header {
+  text-align: center;
+  font-size: $text-8;
+  margin-top: 18vh;
+  line-height: 2;
+
+  b {
+    font-weight: 600;
+  }
+
+  .link {
+    font-weight: 600;
+    box-shadow: 0 7px 14px rgba($blue, 0.2), 0 3px 6px rgba($blue, 0.3);
+    background-color: $dark;
+    padding: 5px 15px;
+    color: $cream;
+    margin: 0 10px;
+  }
+}

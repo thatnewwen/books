@@ -1,3 +1,122 @@
+@import 'template.scss';
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
 *,
 *::before,
 *::after {
@@ -16,22 +135,73 @@ body {
   font-kerning: normal;
   font-variant-ligatures: common-ligatures;
   line-height: 1.43;
-  font-size: 16px;
+  font-size: $text-3;
   margin: 0;
   padding: 0;
-  font-family: Georgia, sans-serif;
+  color: $dark;
+  font-family: $serif;
+  background-color: rgba($blue, 0.8);
 }
 
 a {
-  text-decoration: none;
+  color: $dark;
+  font-weight: 500;
 }
 
-ol,
-ul {
-  list-style: none;
-  margin-bottom: 0;
+.link {
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
 }
 
-ul {
-  padding-left: 0;
+.input {
+  transition: 0.2s;
+  display: inline-block;
+  outline: none;
+  vertical-align: middle;
+  padding: 0.6em 1em;
+  box-shadow: none;
+  color: $dark;
+  border: none;
+  border-bottom: 2px solid $blue;
+  background-color: rgba($white, 0.7);
+  margin: 0.25em;
+  font-size: 1em;
+
+  &:focus,
+  &:hover {
+    background-color: $white;
+    border-color: $dark;
+    box-shadow: 0 7px 14px rgba($blue, 0.7), 0 3px 6px rgba($blue, 0.9);
+  }
+}
+
+.btn {
+  transition: 0.2s;
+  display: inline-block;
+  outline: none;
+  border-radius: 0.28571429rem;
+  vertical-align: middle;
+  padding: 0.6em 1em;
+  box-shadow: none;
+  color: $white;
+  border: none;
+  background-color: $dark;
+  margin: 0.25em;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 7px 14px rgba($blue, 0.2), 0 3px 6px rgba($blue, 0.3);
+
+  &:hover {
+    background-color: rgba($dark, 0.9);
+    box-shadow: 0 7px 14px rgba($blue, 0.7), 0 3px 6px rgba($blue, 0.9);
+    transform: translateY(-1px);
+  }
+}
+
+.page-container {
+  width: $page-width;
+  margin: 0 auto;
+  padding: 2em;
 }

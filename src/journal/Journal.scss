@@ -1,0 +1,51 @@
+@import 'template.scss';
+
+.journal-editor {
+  font-size: $text-5;
+  font-family: $serif;
+  width: 100%;
+  background-color: $white;
+  padding: 1em;
+  margin-bottom: 2em;
+  min-height: 100vh;
+  border: 1px solid rgba($dark, 0.01);
+  box-shadow: 0 7px 14px rgba($blue, 0.01), 0 3px 6px rgba($blue, 0.05);
+
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $blue;
+    z-index: -2;
+  }
+
+  &:after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($white, 0.98);
+    z-index: -1;
+  }
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+.ql-bubble .ql-editor blockquote {
+  border-left-color: rgba($blue, 0.4);
+
+  + blockquote {
+    margin-top: -5px;
+  }
+}

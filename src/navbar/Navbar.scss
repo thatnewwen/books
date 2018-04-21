@@ -1,0 +1,43 @@
+@import 'template.scss';
+
+.navbar-container {
+  background-color: rgba($white, 0.1);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0 1em;
+  width: $page-width;
+  margin: 0 auto;
+  justify-content: flex-end;
+  font-family: $sans-serif;
+  height: 3.7em;
+
+  a {
+    padding: 1em;
+    display: block;
+  }
+
+  .brand {
+    font-family: $serif;
+    font-weight: 600;
+    margin-right: auto;
+    font-size: $text-5;
+    padding: 0;
+  }
+
+  .light-btn {
+    color: $blue;
+    font-weight: 600;
+    background-color: $white;
+    border-radius: 0.28571429rem;
+    padding: 0.25em 0.6em;
+    margin-left: 1em;
+    box-shadow: 0 7px 14px rgba($dark, 0.03), 0 3px 6px rgba($dark, 0.1);
+  }
+
+  .logout-btn {
+    color: rgba($dark, 0.5);
+  }
+}

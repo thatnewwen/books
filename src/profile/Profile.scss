@@ -1,0 +1,44 @@
+@import 'template.scss';
+
+.profile-header {
+  text-align: center;
+  font-size: $text-10;
+  font-weight: 600;
+  margin-bottom: 0.6em;
+  margin-top: 0.3em;
+  color: $dark;
+  text-shadow: 0 7px 14px rgba($blue, 0.2), 0 3px 6px rgba($blue, 0.3);
+}
+
+.book-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.book-container {
+  margin: 1em;
+  padding: 2em;
+  background-color: $dark;
+  border-radius: 4px;
+  box-shadow: 0 7px 14px rgba($blue, 0.2), 0 3px 6px rgba($blue, 0.3);
+  width: 190px;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-title {
+  color: $cream;
+  font-size: $text-4;
+  font-weight: 500;
+}
+
+.book-author {
+  color: $blue;
+  font-size: $text-2;
+  margin-top: 2em;
+  display: flex;
+  margin-left: auto;
+}

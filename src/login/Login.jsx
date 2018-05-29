@@ -1,77 +1,68 @@
 import React from 'react';
-import axios from 'axios';
-import { withFormik } from 'formik';
+import { Formik } from 'formik';
 import history from '../history.js';
+import { LoginContext, axios } from '../App';
 
 import './Login.css';
 
-const loginForm = props => {
-  const { values, isSubmitting, handleChange, handleSubmit } = props;
+const loginForm = login => (
+  <Formik
+    initialValues={{
+      username: '',
+      password: '',
+    }}
+    onSubmit={(values, { setSubmitting }) => {
+      axios
+        .post('/login', values)
+        .then(res => {
+          setSubmitting(false);
 
-  return (
-    <form onSubmit={handleSubmit} className="login-form">
-      <h1 className="login-header">
-        Welcome <br /> Back!
-      </h1>
+          login(res.data.token, () => {
+            history.push('/profile');
+          });
+        })
+        .catch(() => setSubmitting(false));
+    }}
+    render={({ values, handleChange, handleSubmit, isSubmitting }) => (
+      <form onSubmit={handleSubmit} className="login-form">
+        <h1 className="login-header">
+          Welcome <br /> Back!
+        </h1>
 
-      <div>
-        <label htmlFor="username"> Username or Email </label>
-        <input
-          name="username"
-          type="text"
-          className="input"
-          value={values.email}
-          onChange={handleChange}
-        />
-      </div>
+        <div>
+          <label htmlFor="username"> Username or Email </label>
+          <input
+            name="username"
+            type="text"
+            className="input"
+            value={values.email}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div>
-        <label htmlFor="password"> Password </label>
-        <input
-          name="password"
-          type="password"
-          className="input"
-          value={values.password}
-          onChange={handleChange}
-        />
-      </div>
+        <div>
+          <label htmlFor="password"> Password </label>
+          <input
+            name="password"
+            type="password"
+            className="input"
+            value={values.password}
+            onChange={handleChange}
+          />
+        </div>
 
-      <button className="btn" type="submit" disabled={isSubmitting}>
-        Log In
-      </button>
-    </form>
-  );
-};
+        <button className="btn" type="submit" disabled={isSubmitting}>
+          Log In
+        </button>
+      </form>
+    )}
+  />
+);
 
-const Login = withFormik({
-  mapPropsToValues() {
-    return { username: '', password: '' };
-  },
-
-  handleSubmit(values, { setSubmitting }) {
-    axios
-      .post('/login', values)
-      .then(res => {
-        setSubmitting(false);
-        localStorage.setItem('jwt', res.data.token);
-        history.push('/profile');
-      })
-      .catch(() => setSubmitting(false));
-  },
-})(loginForm);
-
-export function setAuthToken() {
-  if (localStorage && localStorage.getItem('jwt')) {
-    const jwt = localStorage.getItem('jwt');
-    axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-  }
-}
-
-export function unsetAuthToken() {
-  if (localStorage) {
-    localStorage.removeItem('jwt');
-    axios.defaults.headers.common['Authorization'] = null;
-  }
-}
+const Login = () => (
+  <LoginContext.Consumer>
+    {({ login }) => loginForm(login)}
+  </LoginContext.Consumer>
+);
 
 export default Login;

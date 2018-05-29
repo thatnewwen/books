@@ -1,7 +1,7 @@
 @import 'template.scss';
 
 .navbar-container {
-  background-color: rgba($white, 0.1);
+  background-color: rgba($white, 0.6);
 }
 
 .navbar {
@@ -28,13 +28,13 @@
   }
 
   .light-btn {
-    color: $blue;
+    color: $cream;
     font-weight: 600;
-    background-color: $white;
     border-radius: 0.28571429rem;
-    padding: 0.25em 0.6em;
+    padding: 0.4em 0.6em;
     margin-left: 1em;
-    box-shadow: 0 7px 14px rgba($dark, 0.03), 0 3px 6px rgba($dark, 0.1);
+    background-color: $dark;
+    box-shadow: 0 7px 14px rgba($cream, 0.3), 0 3px 6px rgba($cream, 0.5);
   }
 
   .logout-btn {

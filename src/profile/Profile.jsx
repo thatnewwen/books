@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { setAuthToken } from '../login/Login';
+import { axios } from '../App';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 
@@ -13,7 +12,6 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    setAuthToken();
     axios
       .get('/user/profile')
       .then(res => {

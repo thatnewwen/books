@@ -16,12 +16,11 @@ class Profile extends Component {
       .get('/user/profile')
       .then(res => {
         const user = res.data;
-        this.setState({ isLoaded: true });
 
         axios
           .get('/api/books', { params: { bookIds: user.bookIds } })
           .then(res => {
-            this.setState({ books: res.data });
+            this.setState({ books: res.data, isLoaded: true });
           })
           .catch();
       })

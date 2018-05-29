@@ -19,7 +19,7 @@ class App extends Component {
   login(token) {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      this.setState({ loggedIn: true });      
+      this.setState({ loggedIn: true });
     }
   }
 

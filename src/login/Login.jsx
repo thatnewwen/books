@@ -60,18 +60,4 @@ const Login = withFormik({
   },
 })(loginForm);
 
-export function setAuthToken() {
-  if (localStorage && localStorage.getItem('jwt')) {
-    const jwt = localStorage.getItem('jwt');
-    axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
-  }
-}
-
-export function unsetAuthToken() {
-  if (localStorage) {
-    localStorage.removeItem('jwt');
-    axios.defaults.headers.common['Authorization'] = null;
-  }
-}
-
 export default Login;

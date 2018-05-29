@@ -16,13 +16,11 @@ class App extends Component {
     this.state = { loggedIn: false, login: this.login, logout: this.logout };
   }
 
-  login() {
-    if (localStorage && localStorage.getItem('jwt')) {
-      const jwt = localStorage.getItem('jwt');
-      axios.defaults.headers.common['Authorization'] = `Bearer ${jwt}`;
+  login(token) {
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      this.setState({ loggedIn: true });      
     }
-
-    this.setState({ loggedIn: true });
   }
 
   logout() {

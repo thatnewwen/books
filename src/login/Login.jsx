@@ -2,13 +2,14 @@ import React from 'react';
 import axios from 'axios';
 import { Formik } from 'formik';
 import history from '../history.js';
+import { LoginContext } from '../App';
 
 import './Login.css';
 
-const Login = () => (
+const loginForm = (login) => (
   <Formik
     initialValues={{
-      email: '',
+      username: '',
       password: '',
     }}
 
@@ -17,7 +18,7 @@ const Login = () => (
         .post('/login', values)
         .then(res => {
           setSubmitting(false);
-          localStorage.setItem('jwt', res.data.token);
+          login(res.data.token);
           history.push('/profile');
         })
         .catch(() => setSubmitting(false));
@@ -64,5 +65,11 @@ const Login = () => (
     }
   />
 );
+
+const Login = () => (
+  <LoginContext.Consumer>
+    {({login}) => loginForm(login)}
+  </LoginContext.Consumer>
+)
 
 export default Login;

@@ -37,11 +37,7 @@ class Profile extends Component {
         <div className="profile-header">Your Bookshelf</div>
         <ul className="book-list">
           {this.state.books.map((book, index) => (
-            <Link
-              to={'/journal/' + book._id}
-              key={index}
-              className="book-container"
-            >
+            <Link to={'/journal/' + book._id} key={index} className="book-item">
               <div className="book-title">{book.title}</div>
               <div className="book-author">{_.first(book.author_name)}</div>
             </Link>

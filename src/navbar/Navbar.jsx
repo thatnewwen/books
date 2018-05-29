@@ -29,7 +29,7 @@ class Navbar extends Component {
           </li>
 
           <li>
-            <Link to="/" className="light-btn">
+            <Link to="/search" className="light-btn">
               Add a Book
             </Link>
           </li>

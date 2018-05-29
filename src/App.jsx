@@ -10,17 +10,22 @@ import Profile from './profile/Profile';
 import Journal from './journal/Journal';
 
 const LoginContext = React.createContext('loggedIn');
-let axios = Axios.create({
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem('token')}`,
-  },
-});
+let axios = getAxios();
+
+function getAxios(token = localStorage.getItem('token')) {
+  const params = token
+    ? { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+    : {};
+
+  return Axios.create(params);
+}
 
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      loggedIn: false,
+      loggedIn: localStorage.getItem('token'),
       login: this.login.bind(this),
       logout: this.logout.bind(this),
     };
@@ -30,11 +35,7 @@ class App extends Component {
     if (token) {
       localStorage.setItem('token', token);
 
-      axios = Axios.create({
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      axios = getAxios();
 
       this.setState({ loggedIn: true }, callback);
     }
@@ -42,6 +43,9 @@ class App extends Component {
 
   logout() {
     localStorage.setItem('token', null);
+
+    axios = getAxios();
+
     this.setState({ loggedIn: false });
   }
 

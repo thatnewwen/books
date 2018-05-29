@@ -36,11 +36,11 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
-        <div>
-          <Navbar />
+      <LoginContext.Provider value={this.state}>
+        <Router>
+          <div>
+            <Navbar />
 
-          <LoginContext.Provider value={this.state}>
             <div className="page-container">
               <Switch>
                 <Route exact path="/" component={Landing} />
@@ -51,9 +51,9 @@ class App extends Component {
                 <Route component={NotFound} />
               </Switch>
             </div>
-          </LoginContext.Provider>
-        </div>
-      </Router>
+          </div>
+        </Router>
+      </LoginContext.Provider>
     );
   }
 }

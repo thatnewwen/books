@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import history from '../history.js';
-import { LoginContext } from '../App';
+import { LoginContext, axios } from '../App';
 
 import './Navbar.css';
 

@@ -1,8 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { Formik } from 'formik';
 import history from '../history.js';
-import { LoginContext } from '../App';
+import { LoginContext, axios } from '../App';
 
 import './Login.css';
 
@@ -17,8 +16,10 @@ const loginForm = login => (
         .post('/login', values)
         .then(res => {
           setSubmitting(false);
-          login(res.data.token);
-          history.push('/profile');
+
+          login(res.data.token, () => {
+            history.push('/profile');
+          });
         })
         .catch(() => setSubmitting(false));
     }}

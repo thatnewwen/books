@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import axios from 'axios';
+import Axios from 'axios';
 
 import Navbar from './navbar/Navbar';
 import Landing from './landing/Landing';
@@ -9,26 +9,31 @@ import Profile from './profile/Profile';
 import Journal from './journal/Journal';
 
 const LoginContext = React.createContext('loggedIn');
+const axios = Axios.create({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
+});
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { loggedIn: false, login: this.login, logout: this.logout };
+    this.state = {
+      loggedIn: false,
+      login: this.login.bind(this),
+      logout: this.logout.bind(this),
+    };
   }
 
-  login(token) {
+  login(token, callback) {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      this.setState({ loggedIn: true });
+      localStorage.setItem('token', token);
+      this.setState({ loggedIn: true }, callback);
     }
   }
 
   logout() {
-    if (localStorage) {
-      localStorage.removeItem('jwt');
-      axios.defaults.headers.common['Authorization'] = null;
-    }
-
+    localStorage.setItem('token', null);
     this.setState({ loggedIn: false });
   }
 
@@ -60,4 +65,4 @@ const NotFound = () => (
   <h1>Whoops! We can't find the page you're looking for.</h1>
 );
 
-export { App, LoginContext };
+export { App, LoginContext, axios };

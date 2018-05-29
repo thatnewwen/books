@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import Axios from 'axios';
+import history from './history';
 
 import Navbar from './navbar/Navbar';
 import Landing from './landing/Landing';
@@ -9,7 +10,7 @@ import Profile from './profile/Profile';
 import Journal from './journal/Journal';
 
 const LoginContext = React.createContext('loggedIn');
-const axios = Axios.create({
+let axios = Axios.create({
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`,
   },
@@ -28,6 +29,13 @@ class App extends Component {
   login(token, callback) {
     if (token) {
       localStorage.setItem('token', token);
+
+      axios = Axios.create({
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
       this.setState({ loggedIn: true }, callback);
     }
   }
@@ -40,7 +48,7 @@ class App extends Component {
   render() {
     return (
       <LoginContext.Provider value={this.state}>
-        <Router>
+        <Router history={history}>
           <div>
             <Navbar />
 

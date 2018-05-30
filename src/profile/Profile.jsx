@@ -18,7 +18,7 @@ class Profile extends Component {
         const user = res.data;
 
         axios
-          .get('/api/books', { params: { bookIds: user.bookIds } })
+          .get('/api/books', { params: { _id: user.bookIds } })
           .then(res => {
             this.setState({ books: res.data, isLoaded: true });
           })

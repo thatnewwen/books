@@ -9,20 +9,19 @@ class Search extends Component {
   constructor(props) {
     super(props);
     this.state = { books: [], isLoaded: false };
+    this.searchBooks = this.searchBooks.bind(this);
   }
 
-  componentDidMount() {
-    axios
-      .get('/user/profile')
-      .then(res => {
-        const user = res.data;
+  searchBooks(event) {
+    const value = event.target.value;
+    console.log(value);
 
-        axios
-          .get('/api/books', { params: { bookIds: user.bookIds } })
-          .then(res => {
-            this.setState({ books: res.data, isLoaded: true });
-          })
-          .catch();
+    this.setState({ isLoaded: false });
+
+    axios
+      .get('/api/books', { params: { search: value } })
+      .then(res => {
+        this.setState({ books: res.data, isLoaded: true });
       })
       .catch();
   }
@@ -34,6 +33,7 @@ class Search extends Component {
           className="search-input input"
           type="search"
           placeholder="Search for a book..."
+          onChange={this.searchBooks}
         />
 
         <ul className="book-list">

@@ -11,7 +11,7 @@ Users.remove().then(() => {
     .select('_id')
     .limit(50)
     .then(books => {
-      const bookIds = _.map(_.sampleSize(books, 10), '_id');
+      const bookIds = _.compact(_.map(_.sample(books), '_id'));
       const testUser = new Users({
         username: 'test@gmail.com',
         password: 'test123',

@@ -4,7 +4,7 @@ const Entries = require('../models/entries.js');
 user.put('/entries', (req, res) => {
   const user = req.user;
   const userId = user._id;
-  const { bookId, contents } = req.query;
+  const { bookId, contents } = req.body;
 
   Entries.findOneAndUpdate(
     { bookId, userId },

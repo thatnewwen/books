@@ -12,7 +12,7 @@ const saveChanges = _.debounce(quill => {
   const bookId = getRoutePathEnd();
 
   axios
-    .put('/user/entries', { params: { bookId, contents } })
+    .put('/user/entries', { bookId, contents })
     .then()
     .catch();
 }, 1000);

@@ -1,7 +1,7 @@
 const { mongoose, Schema } = require('./mongoose.js');
 
 const entriesSchema = new Schema({
-  content: Object,
+  contents: Object,
   bookId: String,
   userId: String,
 });

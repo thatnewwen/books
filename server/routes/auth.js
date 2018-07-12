@@ -10,6 +10,8 @@ const Users = require('../models/users.js');
 const { app } = require('../index.js');
 const _ = require('lodash');
 
+const SECRET = 'this_is_still_todo_in_envs';
+
 passport.use(
   new LocalStrategy(function(username, password, done) {
     Users.findOne({ username })
@@ -38,7 +40,7 @@ passport.use(
   new JWTStrategy(
     {
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'replace_this_with_envs',
+      secretOrKey: SECRET,
     },
     (jwtPayload, done) => {
       return Users.findOne({ _id: jwtPayload._id })
@@ -58,7 +60,7 @@ app.post('/login', (req, res, next) => {
           res.status(400).send();
         }
 
-        const token = jwt.sign(user, 'replace_this_with_envs');
+        const token = jwt.sign(user, SECRET);
 
         return res.json({ token, user }).send();
       });

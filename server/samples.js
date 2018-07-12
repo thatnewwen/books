@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const mongoose = require('mongoose');
 
 const Books = require('./models/books.js');
 const Users = require('./models/users.js');
@@ -15,6 +16,7 @@ Users.remove().then(() => {
     .then(books => {
       const bookIds = _.compact(_.map(_.sample(books), '_id'));
       const testUser = new Users({
+        _id: mongoose.Types.ObjectId('5b47e88804a18d35d98ab14a'),
         username: 'test@gmail.com',
         password: 'test123',
         bookIds,

@@ -6,8 +6,8 @@ import { LoginContext, axios } from '../App';
 import './Navbar.css';
 
 class Navbar extends Component {
-  navItems({ loggedIn, logout }) {
-    if (loggedIn) {
+  navItems({ user, logout }) {
+    if (user) {
       return (
         <React.Fragment>
           <li>

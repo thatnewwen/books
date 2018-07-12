@@ -26,28 +26,30 @@ class App extends Component {
     super(props);
 
     this.state = {
-      loggedIn: localStorage.getItem('token'),
+      user: localStorage.getItem('user'),
       login: this.login.bind(this),
       logout: this.logout.bind(this),
     };
   }
 
-  login(token, callback) {
-    if (token) {
+  login({ token, user }, callback) {
+    if (token && user) {
       localStorage.setItem('token', token);
+      localStorage.setItem('user', user);
 
       axios = getAxios();
 
-      this.setState({ loggedIn: true }, callback);
+      this.setState({ user }, callback);
     }
   }
 
   logout() {
     localStorage.setItem('token', null);
+    localStorage.setItem('user', null);
 
     axios = getAxios();
 
-    this.setState({ loggedIn: false });
+    this.setState({ user: null });
   }
 
   render() {

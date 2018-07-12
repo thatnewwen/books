@@ -16,8 +16,9 @@ module.exports = { app, api, user };
 
 require('./samples.js');
 require('./routes/auth.js');
-require('./routes/user.js');
+require('./routes/profile.js');
 require('./routes/books.js');
+require('./routes/entries.js');
 
 app.use('/api', api);
 app.use('/user', passport.authenticate('jwt', { session: false }), user);

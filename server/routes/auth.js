@@ -60,7 +60,7 @@ app.post('/login', (req, res, next) => {
 
         const token = jwt.sign(user, 'replace_this_with_envs');
 
-        return res.json({ token }).send();
+        return res.json({ token, user }).send();
       });
     }
   })(req, res);

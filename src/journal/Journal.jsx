@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Quill from 'quill';
 import { getRoutePathEnd } from '../history.js';
 import _ from 'lodash';
+import { axios } from '../App';
 
 import './Journal.css';
 
@@ -10,7 +11,10 @@ const saveChanges = _.debounce(quill => {
   const contents = quill.getContents();
   const bookId = getRoutePathEnd();
 
-  console.log(bookId, contents);
+  axios
+    .put('/user/entries', { params: { bookId, contents } })
+    .then()
+    .catch();
 }, 1000);
 
 class Journal extends Component {
@@ -18,10 +22,22 @@ class Journal extends Component {
     const quill = new Quill('#journal-editor', {
       theme: 'bubble',
     });
+    const bookId = getRoutePathEnd();
 
-    quill.on('text-change', () => {
-      saveChanges(quill);
-    });
+    axios
+      .get(`/user/entries/${bookId}`)
+      .then(res => {
+        const entry = res.data;
+
+        if (entry) {
+          quill.setContents(entry.contents);
+        }
+
+        quill.on('text-change', () => {
+          saveChanges(quill);
+        });
+      })
+      .catch();
   }
 
   render() {

@@ -17,7 +17,7 @@ const loginForm = login => (
         .then(res => {
           setSubmitting(false);
 
-          login(res.data.token, () => {
+          login(res.data, () => {
             history.push('/profile');
           });
         })

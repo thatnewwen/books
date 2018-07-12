@@ -19,7 +19,9 @@ api.get('/books', (req, res) => {
     ];
   }
 
-  Books.find(query).then(books => {
-    res.json(books).send();
-  });
+  Books.find(query)
+    .limit(20)
+    .then(books => {
+      res.json(books).send();
+    });
 });

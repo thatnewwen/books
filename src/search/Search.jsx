@@ -12,7 +12,11 @@ class Search extends Component {
     this.searchBooks = this.searchBooks.bind(this);
   }
 
-  searchBooks(event) {
+  componentDidMount() {
+    this.searchBooks();
+  }
+
+  searchBooks(event = { target: { value: '' } }) {
     const value = event.target.value;
 
     this.setState({ isLoaded: false });

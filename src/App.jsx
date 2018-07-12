@@ -14,9 +14,7 @@ const LoginContext = React.createContext('loggedIn');
 let axios = getAxios();
 
 function getAxios(token = localStorage.getItem('token')) {
-  const params = token
-    ? { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-    : {};
+  const params = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 
   return Axios.create(params);
 }

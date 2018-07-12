@@ -1,5 +1,6 @@
 const { user } = require('../index.js');
 const Entries = require('../models/entries.js');
+const Users = require('../models/users.js');
 
 user.put('/entries', (req, res) => {
   const user = req.user;
@@ -11,7 +12,9 @@ user.put('/entries', (req, res) => {
     { bookId, userId, contents },
     { upsert: true }
   ).then(entry => {
-    res.json(entry).send();
+    Users.findByIdAndUpdate(userId, {
+      $addToSet: { bookIds: bookId },
+    }).then(() => res.send());
   });
 });
 

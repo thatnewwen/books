@@ -1,6 +1,8 @@
+const _ = require('lodash');
+
 const Books = require('./models/books.js');
 const Users = require('./models/users.js');
-const _ = require('lodash');
+const Entries = require('./models/entries.js');
 
 Books.remove().then(() => {
   Books.insertMany(sampleBooks);
@@ -21,6 +23,8 @@ Users.remove().then(() => {
       testUser.save();
     });
 });
+
+Entries.remove();
 
 const sampleBooks = [
   {

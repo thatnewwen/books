@@ -14,7 +14,6 @@ class Search extends Component {
 
   searchBooks(event) {
     const value = event.target.value;
-    console.log(value);
 
     this.setState({ isLoaded: false });
 

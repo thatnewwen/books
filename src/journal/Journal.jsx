@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 
 import Quill from 'quill';
 import { getRoutePathEnd } from '../history.js';
+import _ from 'lodash';
 
 import './Journal.css';
+
+const saveChanges = _.debounce(quill => {
+  const contents = quill.getContents();
+  const bookId = getRoutePathEnd();
+
+  console.log(bookId, contents);
+}, 1000);
 
 class Journal extends Component {
   componentDidMount() {
@@ -12,10 +20,7 @@ class Journal extends Component {
     });
 
     quill.on('text-change', () => {
-      const contents = quill.getContents();
-      const bookId = getRoutePathEnd();
-
-      console.log(bookId, contents);
+      saveChanges(quill);
     });
   }
 

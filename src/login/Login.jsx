@@ -11,7 +11,7 @@ const loginForm = login => (
       username: '',
       password: '',
     }}
-    onSubmit={(values, { setSubmitting }) => {
+    onSubmit={(values, { setSubmitting, setErrors }) => {
       axios
         .post('/login', values)
         .then(res => {
@@ -21,9 +21,14 @@ const loginForm = login => (
             history.push('/profile');
           });
         })
-        .catch(() => setSubmitting(false));
+        .catch(() => {
+          setErrors({
+            submit: 'Username and password did not match any accounts.',
+          });
+          setSubmitting(false);
+        });
     }}
-    render={({ values, handleChange, handleSubmit, isSubmitting }) => (
+    render={({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
       <form onSubmit={handleSubmit} className="login-form">
         <h1 className="login-header">
           Welcome <br /> Back!
@@ -50,6 +55,8 @@ const loginForm = login => (
             onChange={handleChange}
           />
         </div>
+
+        {errors.submit && <div className="login-error">{errors.submit}</div>}
 
         <button className="btn" type="submit" disabled={isSubmitting}>
           Log In

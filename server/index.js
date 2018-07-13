@@ -24,7 +24,7 @@ app.use('/api', api);
 app.use('/user', passport.authenticate('jwt', { session: false }), user);
 
 // Everything else is client routing
-app.get('*', function(req, res) {
+app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 

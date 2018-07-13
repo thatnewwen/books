@@ -1,8 +1,8 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 const passportJWT = require('passport-jwt');
 const jwt = require('jsonwebtoken');
-const FacebookStrategy = require('passport-facebook');
 
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
@@ -37,18 +37,6 @@ const passwordStrategy = new LocalStrategy((username, password, done) => {
     .catch(err => done(err));
 });
 
-const jwtStrategy = new JWTStrategy(
-  {
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: TOKEN_SECRET,
-  },
-  (jwtPayload, done) => {
-    return Users.findOne({ _id: jwtPayload._id })
-      .then(user => done(null, user))
-      .catch(err => done(err));
-  }
-);
-
 const facebookStrategy = new FacebookStrategy(
   {
     clientID: FACEBOOK_CLIENT,
@@ -63,9 +51,21 @@ const facebookStrategy = new FacebookStrategy(
   }
 );
 
+const jwtStrategy = new JWTStrategy(
+  {
+    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    secretOrKey: TOKEN_SECRET,
+  },
+  (jwtPayload, done) => {
+    return Users.findOne({ _id: jwtPayload._id })
+      .then(user => done(null, user))
+      .catch(err => done(err));
+  }
+);
+
 passport.use(passwordStrategy);
-passport.use(jwtStrategy);
 passport.use(facebookStrategy);
+passport.use(jwtStrategy);
 
 app.post('/login', (req, res, next) => {
   passport.authenticate('local', { session: false }, (err, user, info) => {

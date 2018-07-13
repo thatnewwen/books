@@ -33,8 +33,6 @@ const loginForm = login => (
       }
     }}
     render={({ values, errors, handleChange, handleSubmit, isSubmitting }) => {
-      const authGoogle = () => {};
-
       return (
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="login-header">
@@ -77,14 +75,9 @@ const loginForm = login => (
             Continue with Facebook
           </a>
 
-          <button
-            className="btn google-auth"
-            type="submit"
-            onClick={authGoogle}
-            disabled={isSubmitting}
-          >
+          <a className="btn google-auth" href="/auth/google">
             Continue with Google
-          </button>
+          </a>
         </form>
       );
     }}

@@ -15,8 +15,8 @@ const TOKEN_SECRET = 'this_is_still_todo_in_envs';
 const FACEBOOK_CLIENT = '1016922761801466';
 const FACEBOOK_SECRET = '60ea5186f6c10ee0e9d1fbfbe1528272';
 
-const passwordStrategy = new LocalStrategy((username, password, done) => {
-  Users.findOne({ username })
+const passwordStrategy = new LocalStrategy((email, password, done) => {
+  Users.findOne({ email })
     .then(user => {
       if (!user) {
         done(null, false);
@@ -41,13 +41,19 @@ const facebookStrategy = new FacebookStrategy(
   {
     clientID: FACEBOOK_CLIENT,
     clientSecret: FACEBOOK_SECRET,
-    callbackURL: 'http://localhost:3000/auth/facebook/callback',
+    callbackURL: 'http://localhost:8080/auth/facebook/callback',
     enableProof: true,
   },
   (accessToken, refreshToken, profile, callback) => {
-    Users.findOrCreate({ facebookId: profile.id }, user =>
-      callback(null, user)
-    );
+    const { id: facebookId, displayName: name } = profile;
+
+    Users.findOneAndUpdate(
+      { facebookId },
+      { facebookId, name },
+      { upsert: true, returnNewDocument: true }
+    ).then(user => {
+      callback(null, user);
+    });
   }
 );
 
@@ -67,21 +73,28 @@ passport.use(passwordStrategy);
 passport.use(facebookStrategy);
 passport.use(jwtStrategy);
 
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+
+function loginUser(err, user, req, res) {
+  if (err || !user) {
+    res.status(400).send();
+  } else {
+    req.login(user, { session: false }, err => {
+      if (err) {
+        res.status(400).send();
+      }
+
+      const token = jwt.sign(user, TOKEN_SECRET);
+
+      return res.json({ token, user }).send();
+    });
+  }
+}
+
 app.post('/login', (req, res, next) => {
-  passport.authenticate('local', { session: false }, (err, user, info) => {
-    if (err || !user) {
-      res.status(400).send();
-    } else {
-      req.login(user, { session: false }, err => {
-        if (err) {
-          res.status(400).send();
-        }
-
-        const token = jwt.sign(user, TOKEN_SECRET);
-
-        return res.json({ token, user }).send();
-      });
-    }
+  passport.authenticate('local', { session: false }, (err, user) => {
+    loginUser(err, user, req, res);
   })(req, res);
 });
 
@@ -91,9 +104,8 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get(
   '/auth/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  passport.authenticate('facebook'),
   (req, res) => {
-    console.log(res);
-    res.redirect('/');
+    loginUser(null, res.user, req, res);
   }
 );

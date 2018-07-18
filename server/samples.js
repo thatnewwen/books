@@ -17,7 +17,7 @@ Users.remove().then(() => {
       const bookIds = _.compact(_.map(_.sample(books), '_id'));
       const testUser = new Users({
         _id: mongoose.Types.ObjectId('5b47e88804a18d35d98ab14a'),
-        username: 'test@gmail.com',
+        email: 'test@gmail.com',
         password: 'test123',
         bookIds,
       });

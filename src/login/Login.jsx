@@ -8,7 +8,7 @@ import './Login.css';
 const loginForm = login => (
   <Formik
     initialValues={{
-      username: '',
+      email: '',
       password: '',
     }}
     onSubmit={(values, { setSubmitting, setErrors }) => {
@@ -40,9 +40,9 @@ const loginForm = login => (
           </h1>
 
           <div>
-            <label htmlFor="username"> Username or Email </label>
+            <label htmlFor="email"> Username or Email </label>
             <input
-              name="username"
+              name="email"
               type="text"
               className="input"
               value={values.email}
@@ -71,14 +71,11 @@ const loginForm = login => (
             {getRoutePathEnd() === 'login' ? 'Log In' : 'Sign Up'}
           </button>
 
-          <a
-            className="btn facebook-auth"
-            href="http://localhost:8080/auth/facebook"
-          >
+          <a className="btn facebook-auth" href="localhost:8080/auth/facebook">
             Continue with Facebook
           </a>
 
-          <a className="btn google-auth" href="/auth/google">
+          <a className="btn google-auth" href="localhost:8080/auth/google">
             Continue with Google
           </a>
         </form>

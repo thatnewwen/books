@@ -11,7 +11,7 @@ user.put('/entries', (req, res) => {
     { bookId, userId },
     { bookId, userId, contents },
     { upsert: true }
-  ).then(entry => {
+  ).then(() => {
     Users.findByIdAndUpdate(userId, {
       $addToSet: { bookIds: bookId },
     }).then(() => res.send());

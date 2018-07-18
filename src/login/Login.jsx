@@ -8,7 +8,7 @@ import './Login.css';
 const loginForm = login => (
   <Formik
     initialValues={{
-      email: '',
+      username: '',
       password: '',
     }}
     onSubmit={(values, { setSubmitting, setErrors }) => {
@@ -25,10 +25,11 @@ const loginForm = login => (
             });
           })
           .catch(() => {
+            setSubmitting(false);
+
             setErrors({
               submit: 'Username and password did not match any accounts.',
             });
-            setSubmitting(false);
           });
       }
     }}
@@ -40,9 +41,9 @@ const loginForm = login => (
           </h1>
 
           <div>
-            <label htmlFor="email"> Username or Email </label>
+            <label htmlFor="username"> Username or Email </label>
             <input
-              name="email"
+              name="username"
               type="text"
               className="input"
               value={values.email}

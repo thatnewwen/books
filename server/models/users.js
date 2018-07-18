@@ -2,10 +2,10 @@ const { mongoose, Schema } = require('./mongoose.js');
 const bcrypt = require('bcrypt');
 
 const usersSchema = new Schema({
-  email: String,
+  username: String,
   password: String,
   bookIds: [String],
-  name: String,
+  displayName: String,
   facebookId: String,
 });
 

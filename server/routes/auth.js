@@ -15,8 +15,8 @@ const TOKEN_SECRET = 'this_is_still_todo_in_envs';
 const FACEBOOK_CLIENT = '1016922761801466';
 const FACEBOOK_SECRET = '60ea5186f6c10ee0e9d1fbfbe1528272';
 
-const passwordStrategy = new LocalStrategy((email, password, done) => {
-  Users.findOne({ email })
+const passwordStrategy = new LocalStrategy((username, password, done) => {
+  Users.findOne({ username })
     .then(user => {
       if (!user) {
         done(null, false);
@@ -45,11 +45,11 @@ const facebookStrategy = new FacebookStrategy(
     enableProof: true,
   },
   (accessToken, refreshToken, profile, callback) => {
-    const { id: facebookId, displayName: name } = profile;
+    const { id: facebookId, displayName } = profile;
 
     Users.findOneAndUpdate(
       { facebookId },
-      { facebookId, name },
+      { facebookId, displayName },
       { upsert: true, returnNewDocument: true }
     ).then(user => {
       callback(null, user);

@@ -132,7 +132,7 @@ auth.get('/facebook', passport.authenticate('facebook'));
 
 auth.get(
   '/facebook/callback',
-  passport.authenticate('facebook', { failureRedirect: 'back' }),
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
   (req, res) => loginUser({ user: req.user, req, res })
 );
 
@@ -140,7 +140,7 @@ auth.get('/google', passport.authenticate('google', { scope: ['profile'] }));
 
 auth.get(
   '/google/callback',
-  passport.authenticate('google', { failureRedirect: 'back' }),
+  passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => loginUser({ user: req.user, req, res })
 );
 

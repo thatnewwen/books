@@ -41,7 +41,7 @@ const facebookStrategy = new FacebookStrategy(
   {
     clientID: FACEBOOK_CLIENT,
     clientSecret: FACEBOOK_SECRET,
-    callbackURL: 'https://localhost:3000/auth/facebook/callback',
+    callbackURL: 'http://localhost:8080/auth/callback',
     enableProof: true,
   },
   (accessToken, refreshToken, profile, callback) => {
@@ -102,7 +102,7 @@ app.get('/logout', req => req.logout());
 app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get(
-  '/auth/facebook/callback',
+  '/auth/callback',
   passport.authenticate('facebook', {
     failureRedirect: '/login',
     successRedirect: '/profile',

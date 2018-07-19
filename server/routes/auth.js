@@ -8,7 +8,7 @@ const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const bcrypt = require('bcrypt');
 const Users = require('../models/users.js');
-const { app } = require('../index.js');
+const { app, auth } = require('../index.js');
 const _ = require('lodash');
 
 const TOKEN_SECRET = 'this_is_still_todo_in_envs';
@@ -30,7 +30,7 @@ const passwordStrategy = new LocalStrategy((username, password, done) => {
             done(null, false);
           }
 
-          done(null, _.pick(user, ['_id']));
+          done(null, user);
         })
         .catch(err => done(err));
     })
@@ -73,10 +73,10 @@ passport.use(passwordStrategy);
 passport.use(facebookStrategy);
 passport.use(jwtStrategy);
 
-passport.serializeUser((user, done) => done(null, user.toJSON()));
+passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
-function loginUser(err, user, req, res) {
+function loginUser({ err, user, req, res }) {
   if (err || !user) {
     res.status(400).send();
   } else {
@@ -84,28 +84,36 @@ function loginUser(err, user, req, res) {
       if (err) {
         res.status(400).send();
       } else {
-        const token = jwt.sign(user, TOKEN_SECRET);
-        res.json({ token, user });
+        const userId = _.pick(user, ['_id']);
+        const token = jwt.sign(userId, TOKEN_SECRET);
+
+        res.cookie('token', token);
+        res.redirect('/login');
       }
     });
   }
 }
 
-app.post('/login', (req, res, next) => {
+app.post('/login', (req, res) => {
   passport.authenticate('local', { session: false }, (err, user) =>
-    loginUser(err, user, req, res)
+    loginUser({ err, user, req, res })
   )(req, res);
 });
 
 app.get('/logout', req => req.logout());
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+auth.get('/facebook', passport.authenticate('facebook'));
 
-app.get(
-  '/auth/callback',
-  passport.authenticate('facebook', {
-    successRedirect: '/profile',
-    failureRedirect: 'back',
-  }),
-  (req, res) => loginUser(null, req.user, req, res)
+auth.get(
+  '/callback',
+  passport.authenticate('facebook', { failureRedirect: 'back' }),
+  (req, res) => loginUser({ user: req.user, req, res })
 );
+
+auth.get('/token', (req, res) => {
+  const cookies = req.cookies || {};
+  const token = cookies.token;
+
+  res.clearCookie('token');
+  res.json({ token });
+});

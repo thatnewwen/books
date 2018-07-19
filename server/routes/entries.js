@@ -24,6 +24,6 @@ user.get('/entries/:bookId', (req, res) => {
   const bookId = req.params.bookId;
 
   Entries.findOne({ bookId, userId }).then(entry => {
-    res.json(entry).send();
+    res.json(entry);
   });
 });

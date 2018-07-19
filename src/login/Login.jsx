@@ -17,14 +17,8 @@ const loginForm = login => (
       if (pathEnd === 'login') {
         axios
           .post('/login', values)
-          .then(res => {
-            setSubmitting(false);
-
-            login(res.data, () => {
-              history.push('/profile');
-            });
-          })
-          .catch(() => {
+          .then(res => setSubmitting(false))
+          .catch(err => {
             setSubmitting(false);
 
             setErrors({
@@ -34,6 +28,12 @@ const loginForm = login => (
       }
     }}
     render={({ values, errors, handleChange, handleSubmit, isSubmitting }) => {
+      axios.get('/auth/token').then(res => {
+        login(res.data, () => {
+          history.push('/profile');
+        });
+      });
+
       return (
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="login-header">

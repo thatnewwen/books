@@ -22,6 +22,6 @@ api.get('/books', (req, res) => {
   Books.find(query)
     .limit(20)
     .then(books => {
-      res.json(books).send();
+      res.json(books);
     });
 });

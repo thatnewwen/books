@@ -84,7 +84,7 @@ function loginUser(err, user, req, res) {
       if (err) {
         res.status(400).send();
       } else {
-        const token = jwt.sign(_.toPlainObject(user), TOKEN_SECRET);
+        const token = jwt.sign(user.toJSON(), TOKEN_SECRET);
         res.json({ token, user });
       }
     });

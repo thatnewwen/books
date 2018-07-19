@@ -7,6 +7,7 @@ const usersSchema = new Schema({
   bookIds: [String],
   displayName: String,
   facebookId: String,
+  googleId: String,
 });
 
 usersSchema.pre('save', function(next) {

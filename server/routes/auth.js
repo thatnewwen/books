@@ -1,6 +1,7 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const passportJWT = require('passport-jwt');
 const jwt = require('jsonwebtoken');
 
@@ -11,9 +12,14 @@ const Users = require('../models/users.js');
 const { app, auth } = require('../index.js');
 const _ = require('lodash');
 
-const TOKEN_SECRET = 'this_is_still_todo_in_envs';
-const FACEBOOK_CLIENT = '1016922761801466';
-const FACEBOOK_SECRET = '60ea5186f6c10ee0e9d1fbfbe1528272';
+const ENVS = {
+  TOKEN_SECRET: 'this_is_still_todo_in_envs',
+  FACEBOOK_CLIENT: '1016922761801466',
+  FACEBOOK_SECRET: '60ea5186f6c10ee0e9d1fbfbe1528272',
+  GOOGLE_CLIENT:
+    '723326403476-m4lpsnb7d7logi84tbsablt1khh1rdvj.apps.googleusercontent.com',
+  GOOGLE_SECRET: 'zHpobzCwj28KrTsRkEiggfTa',
+};
 
 const passwordStrategy = new LocalStrategy((username, password, done) => {
   Users.findOne({ username })
@@ -39,9 +45,9 @@ const passwordStrategy = new LocalStrategy((username, password, done) => {
 
 const facebookStrategy = new FacebookStrategy(
   {
-    clientID: FACEBOOK_CLIENT,
-    clientSecret: FACEBOOK_SECRET,
-    callbackURL: 'http://localhost:8080/auth/callback',
+    clientID: ENVS.FACEBOOK_CLIENT,
+    clientSecret: ENVS.FACEBOOK_SECRET,
+    callbackURL: 'http://localhost:8080/auth/facebook/callback',
     enableProof: true,
   },
   (accessToken, refreshToken, profile, callback) => {
@@ -57,10 +63,29 @@ const facebookStrategy = new FacebookStrategy(
   }
 );
 
+const googleStrategy = new GoogleStrategy(
+  {
+    clientID: ENVS.GOOGLE_CLIENT,
+    clientSecret: ENVS.GOOGLE_SECRET,
+    callbackURL: 'http://localhost:8080/auth/google/callback',
+  },
+  (accessToken, refreshToken, profile, callback) => {
+    const { id: googleId, displayName } = profile;
+
+    Users.findOneAndUpdate(
+      { googleId },
+      { googleId, displayName },
+      { upsert: true, returnNewDocument: true }
+    ).then(user => {
+      callback(null, user);
+    });
+  }
+);
+
 const jwtStrategy = new JWTStrategy(
   {
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: TOKEN_SECRET,
+    secretOrKey: ENVS.TOKEN_SECRET,
   },
   (userPayload, done) => {
     return Users.findOne({ _id: userPayload._id })
@@ -71,6 +96,7 @@ const jwtStrategy = new JWTStrategy(
 
 passport.use(passwordStrategy);
 passport.use(facebookStrategy);
+passport.use(googleStrategy);
 passport.use(jwtStrategy);
 
 passport.serializeUser((user, done) => done(null, user));
@@ -85,7 +111,7 @@ function loginUser({ err, user, req, res }) {
         res.status(400).send();
       } else {
         const userId = _.pick(user, ['_id']);
-        const token = jwt.sign(userId, TOKEN_SECRET);
+        const token = jwt.sign(userId, ENVS.TOKEN_SECRET);
 
         res.cookie('token', token);
         res.redirect('/login');
@@ -105,8 +131,16 @@ app.get('/logout', req => req.logout());
 auth.get('/facebook', passport.authenticate('facebook'));
 
 auth.get(
-  '/callback',
+  '/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: 'back' }),
+  (req, res) => loginUser({ user: req.user, req, res })
+);
+
+auth.get('/google', passport.authenticate('google', { scope: ['profile'] }));
+
+auth.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: 'back' }),
   (req, res) => loginUser({ user: req.user, req, res })
 );
 

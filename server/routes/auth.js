@@ -73,7 +73,7 @@ passport.use(passwordStrategy);
 passport.use(facebookStrategy);
 passport.use(jwtStrategy);
 
-passport.serializeUser((user, done) => done(null, user));
+passport.serializeUser((user, done) => done(null, user.toJSON()));
 passport.deserializeUser((user, done) => done(null, user));
 
 function loginUser(err, user, req, res) {
@@ -84,7 +84,7 @@ function loginUser(err, user, req, res) {
       if (err) {
         res.status(400).send();
       } else {
-        const token = jwt.sign(user.toJSON(), TOKEN_SECRET);
+        const token = jwt.sign(user, TOKEN_SECRET);
         res.json({ token, user });
       }
     });

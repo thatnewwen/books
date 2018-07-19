@@ -41,7 +41,7 @@ const facebookStrategy = new FacebookStrategy(
   {
     clientID: FACEBOOK_CLIENT,
     clientSecret: FACEBOOK_SECRET,
-    callbackURL: 'http://localhost:8080/auth/facebook/callback',
+    callbackURL: 'https://localhost:3000/auth/facebook/callback',
     enableProof: true,
   },
   (accessToken, refreshToken, profile, callback) => {
@@ -83,11 +83,10 @@ function loginUser(err, user, req, res) {
     req.login(user, { session: false }, err => {
       if (err) {
         res.status(400).send();
+      } else {
+        const token = jwt.sign(user, TOKEN_SECRET);
+        res.json({ token, user });
       }
-
-      const token = jwt.sign(user, TOKEN_SECRET);
-
-      return res.json({ token, user }).send();
     });
   }
 }
@@ -104,7 +103,10 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 
 app.get(
   '/auth/facebook/callback',
-  passport.authenticate('facebook'),
+  passport.authenticate('facebook', {
+    failureRedirect: '/login',
+    successRedirect: '/profile',
+  }),
   (req, res) => {
     loginUser(null, res.user, req, res);
   }

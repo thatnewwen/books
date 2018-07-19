@@ -34,6 +34,17 @@ const loginForm = login => (
       }
     }}
     render={({ values, errors, handleChange, handleSubmit, isSubmitting }) => {
+      const authFacebook = () => {
+        axios
+          .get('/auth/facebook')
+          .then(res => {
+            login(res.data, () => {
+              history.push('/profile');
+            });
+          })
+          .catch(() => {});
+      };
+
       return (
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="login-header">
@@ -72,11 +83,14 @@ const loginForm = login => (
             {getRoutePathEnd() === 'login' ? 'Log In' : 'Sign Up'}
           </button>
 
-          <a className="btn facebook-auth" href="localhost:8080/auth/facebook">
+          <a className="btn facebook-auth" onClick={authFacebook}>
             Continue with Facebook
           </a>
 
-          <a className="btn google-auth" href="localhost:8080/auth/google">
+          <a
+            className="btn google-auth"
+            href="http://localhost:8080/auth/google"
+          >
             Continue with Google
           </a>
         </form>

@@ -72,17 +72,11 @@ const loginForm = login => (
             {getRoutePathEnd() === 'login' ? 'Log In' : 'Sign Up'}
           </button>
 
-          <a
-            className="btn facebook-auth"
-            href="http://localhost:8080/auth/facebook"
-          >
+          <a className="btn facebook-auth" href="/auth/facebook">
             Continue with Facebook
           </a>
 
-          <a
-            className="btn google-auth"
-            href="http://localhost:8080/auth/google"
-          >
+          <a className="btn google-auth" href="/auth/google">
             Continue with Google
           </a>
         </form>

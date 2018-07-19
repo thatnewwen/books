@@ -62,8 +62,8 @@ const jwtStrategy = new JWTStrategy(
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: TOKEN_SECRET,
   },
-  (jwtPayload, done) => {
-    return Users.findOne({ _id: jwtPayload._id })
+  (userPayload, done) => {
+    return Users.findOne({ _id: userPayload._id })
       .then(user => done(null, user))
       .catch(err => done(err));
   }
@@ -84,7 +84,7 @@ function loginUser(err, user, req, res) {
       if (err) {
         res.status(400).send();
       } else {
-        const token = jwt.sign(user, TOKEN_SECRET);
+        const token = jwt.sign(_.toPlainObject(user), TOKEN_SECRET);
         res.json({ token, user });
       }
     });
@@ -92,9 +92,9 @@ function loginUser(err, user, req, res) {
 }
 
 app.post('/login', (req, res, next) => {
-  passport.authenticate('local', { session: false }, (err, user) => {
-    loginUser(err, user, req, res);
-  })(req, res);
+  passport.authenticate('local', { session: false }, (err, user) =>
+    loginUser(err, user, req, res)
+  )(req, res);
 });
 
 app.get('/logout', req => req.logout());
@@ -104,10 +104,8 @@ app.get('/auth/facebook', passport.authenticate('facebook'));
 app.get(
   '/auth/callback',
   passport.authenticate('facebook', {
-    failureRedirect: '/login',
     successRedirect: '/profile',
+    failureRedirect: 'back',
   }),
-  (req, res) => {
-    loginUser(null, res.user, req, res);
-  }
+  (req, res) => loginUser(null, req.user, req, res)
 );

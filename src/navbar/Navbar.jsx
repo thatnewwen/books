@@ -10,6 +10,10 @@ class Navbar extends Component {
     if (loggedIn) {
       return (
         <React.Fragment>
+          <Link to="/profile" className="brand">
+            Asterisk
+          </Link>
+
           <li>
             <Link
               to="/login"
@@ -37,9 +41,15 @@ class Navbar extends Component {
       );
     } else {
       return (
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+        <React.Fragment>
+          <Link to="/" className="brand">
+            Asterisk
+          </Link>
+
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+        </React.Fragment>
       );
     }
   }
@@ -48,10 +58,6 @@ class Navbar extends Component {
     return (
       <div className="navbar-container">
         <ul className="navbar">
-          <Link to="/" className="brand">
-            Asterisk
-          </Link>
-
           <LoginContext.Consumer>{this.navItems}</LoginContext.Consumer>
         </ul>
       </div>

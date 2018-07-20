@@ -3,9 +3,10 @@
 .journal-editor {
   font-size: $text-5;
   font-family: $serif;
-  width: 100%;
+  width: $page-width-small;
   background-color: $white;
   padding: 1em;
+  margin: 0 auto;
   margin-bottom: 2em;
   min-height: 100vh;
 
@@ -27,6 +28,10 @@ strong {
 
 em {
   font-style: italic;
+}
+
+.ql-editor {
+  line-height: 1.58;
 }
 
 .ql-bubble .ql-editor blockquote {

@@ -33,7 +33,7 @@ const loginForm = login => (
             setSubmitting(false);
 
             setErrors({
-              submit: 'Username and password did not match any accounts.',
+              submit: 'This email already has an account.',
             });
           });
       }
@@ -54,7 +54,7 @@ const loginForm = login => (
         loginSwitch = (
           <div className="login-switch-container">
             Don't have an account?
-            <a href="/register" class="link red">
+            <a href="/register" className="link red">
               Sign up →
             </a>
           </div>
@@ -63,7 +63,7 @@ const loginForm = login => (
         loginSwitch = (
           <div className="login-switch-container">
             Have an account?
-            <a href="/login" class="link red">
+            <a href="/login" className="link red">
               Log in →
             </a>
           </div>

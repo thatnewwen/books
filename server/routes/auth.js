@@ -110,8 +110,8 @@ function loginUser({ err, user, req, res }) {
       if (err) {
         res.status(400).send();
       } else {
-        const userId = _.pick(user, ['_id']);
-        const token = jwt.sign(userId, ENVS.TOKEN_SECRET);
+        const tokenPayload = _.pick(user, ['_id']);
+        const token = jwt.sign(tokenPayload, ENVS.TOKEN_SECRET);
 
         res.cookie('token', token);
         res.redirect('/login');
@@ -124,6 +124,27 @@ app.post('/login', (req, res) => {
   passport.authenticate('local', { session: false }, (err, user) =>
     loginUser({ err, user, req, res })
   )(req, res);
+});
+
+app.post('/register', (req, res) => {
+  const { username, password } = req.body;
+
+  Users.count({ username }).then(isExist => {
+    if (isExist) {
+      res.status(400).send();
+    } else {
+      const user = new Users({
+        username,
+        password,
+        bookIds: [],
+      });
+
+      user
+        .save()
+        .then(savedUser => loginUser({ err: null, user: savedUser, req, res }))
+        .catch(() => res.status(500).send());
+    }
+  });
 });
 
 app.get('/logout', req => req.logout());

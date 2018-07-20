@@ -152,6 +152,14 @@ a {
   text-decoration: underline;
   cursor: pointer;
   font-weight: 500;
+
+  &.red {
+    color: $red;
+  }
+
+  &.blue {
+    color: $blue;
+  }
 }
 
 .input {
@@ -164,7 +172,7 @@ a {
   color: $dark;
   border: none;
   border-bottom: 2px solid $cream;
-  background-color: rgba($white, 0.7);
+  background-color: $white;
   margin: 0.25em;
   font-size: 1em;
 
@@ -197,6 +205,14 @@ a {
     background-color: rgba($dark, 0.9);
     box-shadow: 0 7px 14px rgba($cream, 0.7), 0 3px 6px rgba($cream, 0.9);
     transform: translateY(-1px);
+  }
+
+  &.blue {
+    background-color: $blue;
+
+    &:hover {
+      background-color: rgba($blue, 0.9);
+    }
   }
 }
 

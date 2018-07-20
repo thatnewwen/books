@@ -5,7 +5,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  font-size: $text-5;
+  font-size: $text-4;
 
   input {
     width: 100%;
@@ -47,8 +47,19 @@
   }
 }
 
+.login-switch-container {
+  margin-top: 1em;
+  text-align: center;
+  font-family: $sans-serif;
+  font-size: $text-3;
+
+  .link {
+    margin-left: 0.5em;
+  }
+}
+
 .login-header {
-  font-size: $text-8;
+  font-size: $text-7;
   text-align: center;
   border-bottom: 2px solid $cream;
   padding-bottom: 0.25em;

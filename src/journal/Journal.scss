@@ -8,14 +8,16 @@
 }
 
 .journal-book-info {
+  padding-top: 1em;
   display: block;
   width: 66%;
 }
 
 .journal-book-title {
-  font-size: $text-7;
+  font-size: $text-8;
   font-weight: bold;
   margin-bottom: $text-5;
+  line-height: 1.1;
 }
 
 .journal-book-author {

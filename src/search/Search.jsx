@@ -35,7 +35,7 @@ class Search extends Component {
         <input
           className="search-input input"
           type="search"
-          placeholder="Search for a book..."
+          placeholder="Search for a book…"
           onChange={this.searchBooks}
         />
 

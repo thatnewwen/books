@@ -1,11 +1,52 @@
 @import 'template.scss';
 
+.journal-heading {
+  display: flex;
+  margin-bottom: 2em;
+  margin-top: 2em;
+  width: $page-width;
+}
+
+.journal-book-info {
+  display: block;
+  width: 66%;
+}
+
+.journal-book-title {
+  font-size: $text-7;
+  font-weight: bold;
+  margin-bottom: $text-5;
+}
+
+.journal-book-author {
+  font-size: $text-6;
+  font-weight: bold;
+  margin-bottom: $text-5;
+}
+
+.journal-book-rating {
+  font-size: $text-5;
+  margin-bottom: $text-5;
+}
+
+.journal-entry-author {
+  font-family: $sans-serif;
+  font-size: $text-4;
+  font-weight: 500;
+}
+
+.journal-book-cover {
+  background-color: $dark;
+  width: 320px;
+  height: 300px;
+  margin-left: 2em;
+}
+
 .journal-editor {
+  width: $page-width-small;
+  margin: 0 auto;
   font-size: $text-5;
   font-family: $serif;
-  width: $page-width-small;
-  padding: 1em;
-  margin: 0 auto;
   margin-bottom: 2em;
   min-height: 100vh;
 
@@ -19,14 +60,14 @@
     background-color: rgba($white, 0.7);
     z-index: -1;
   }
-}
 
-strong {
-  font-weight: bold;
-}
+  strong {
+    font-weight: bold;
+  }
 
-em {
-  font-style: italic;
+  em {
+    font-style: italic;
+  }
 }
 
 .ql-editor {

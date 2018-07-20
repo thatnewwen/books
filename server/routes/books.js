@@ -25,3 +25,11 @@ api.get('/books', (req, res) => {
       res.json(books);
     });
 });
+
+api.get('/books/:bookId', (req, res) => {
+  const bookId = req.params.bookId;
+
+  Books.findOne({ _id: bookId }).then(book => {
+    res.json(book);
+  });
+});

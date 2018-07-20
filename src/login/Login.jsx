@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik } from 'formik';
-import { history, getRoutePathEnd } from '../history.js';
+import { history, routeIncludes, getRouteQueryParams } from '../history.js';
 import { LoginContext, axios } from '../App';
 
 import './Login.css';
@@ -12,9 +12,9 @@ const loginForm = login => (
       password: '',
     }}
     onSubmit={(values, { setSubmitting, setErrors }) => {
-      const pathEnd = getRoutePathEnd();
+      const isLogin = routeIncludes('/login');
 
-      if (pathEnd === 'login') {
+      if (isLogin) {
         axios
           .post('/login', values)
           .then(res => setSubmitting(false))
@@ -45,8 +45,8 @@ const loginForm = login => (
         });
       });
 
-      const pathEnd = getRoutePathEnd();
-      const isLogin = pathEnd === 'login';
+      const isLogin = routeIncludes('login');
+      const isLoginFailed = getRouteQueryParams('failed');
 
       let loginSwitch;
 
@@ -101,9 +101,12 @@ const loginForm = login => (
           </div>
 
           {errors.submit && <div className="login-error">{errors.submit}</div>}
+          {isLoginFailed && (
+            <div className="login-error">Login was unsuccessful.</div>
+          )}
 
           <button
-            className={'btn password-auth ' + (isLogin ? '' : 'blue')}
+            className={'btn password-auth ' + (!isLogin && 'blue')}
             type="submit"
             disabled={isSubmitting}
           >

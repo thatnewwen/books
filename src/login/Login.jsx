@@ -73,9 +73,10 @@ const loginForm = login => (
       return (
         <form onSubmit={handleSubmit} className="login-form">
           <h1 className="login-header">
-            Welcome <br /> Back!
+            {isLogin ? 'Welcome' : 'Hello'}
+            <br />
+            {isLogin ? 'Back!' : 'There!'}
           </h1>
-
           <div>
             <label htmlFor="username"> Username or Email </label>
             <input
@@ -87,7 +88,6 @@ const loginForm = login => (
               onChange={handleChange}
             />
           </div>
-
           <div>
             <label htmlFor="password"> Password </label>
             <input
@@ -99,28 +99,26 @@ const loginForm = login => (
               onChange={handleChange}
             />
           </div>
-
           {errors.submit && <div className="login-error">{errors.submit}</div>}
           {isLoginFailed && (
             <div className="login-error">Login was unsuccessful.</div>
           )}
-
           <button
-            className={'btn password-auth ' + (!isLogin && 'blue')}
+            className="btn password-auth"
             type="submit"
             disabled={isSubmitting}
           >
             {isLogin ? 'Log In' : 'Sign Up'}
           </button>
 
+          <div className="auth-divider"> Or </div>
+
           <a className="btn facebook-auth" href="/auth/facebook">
-            Continue with Facebook
+            {isLogin ? 'Log In' : 'Sign Up'} with Facebook
           </a>
-
           <a className="btn google-auth" href="/auth/google">
-            Continue with Google
+            {isLogin ? 'Log In' : 'Sign Up'} with Google
           </a>
-
           {loginSwitch}
         </form>
       );

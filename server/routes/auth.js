@@ -55,7 +55,7 @@ const facebookStrategy = new FacebookStrategy(
 
     Users.findOneAndUpdate(
       { facebookId },
-      { facebookId, displayName },
+      { $set: { facebookId, displayName } },
       { upsert: true, returnNewDocument: true }
     ).then(user => {
       callback(null, user);
@@ -74,7 +74,7 @@ const googleStrategy = new GoogleStrategy(
 
     Users.findOneAndUpdate(
       { googleId },
-      { googleId, displayName },
+      { $set: { googleId, displayName } },
       { upsert: true, returnNewDocument: true }
     ).then(user => {
       callback(null, user);

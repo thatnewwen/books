@@ -5,13 +5,21 @@ const Users = require('../models/users.js');
 user.put('/entries', (req, res) => {
   const user = req.user;
   const userId = user._id;
-  const { bookId, contents } = req.body;
+  const { bookId, contents, rating } = req.body;
 
-  Entries.findOneAndUpdate(
-    { bookId, userId },
-    { bookId, userId, contents },
-    { upsert: true }
-  ).then(() => {
+  const update = { $set: { bookId, userId } };
+
+  if (contents !== undefined) {
+    update.$set.contents = contents;
+  }
+
+  if (rating !== undefined) {
+    update.$set.rating = rating;
+  }
+
+  Entries.findOneAndUpdate({ bookId, userId }, update, {
+    upsert: true,
+  }).then(() => {
     Users.findByIdAndUpdate(userId, {
       $addToSet: { bookIds: bookId },
     }).then(() => res.send());

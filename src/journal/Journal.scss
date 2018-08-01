@@ -24,11 +24,28 @@
   font-size: $text-6;
   font-weight: bold;
   margin-bottom: $text-5;
+  color: $grey;
 }
 
 .journal-book-rating {
   font-size: $text-5;
   margin-bottom: $text-5;
+  display: inline-block;
+
+  &.rated .rating-star,
+  &:hover .rating-star {
+    color: $pink;
+    cursor: pointer;
+  }
+
+  .rating-star.active ~ .rating-star,
+  .rating-star:hover ~ .rating-star {
+    color: $grey;
+  }
+}
+
+.rating-star {
+  padding: 0 0.1em;
 }
 
 .journal-entry-author {

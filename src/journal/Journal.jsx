@@ -7,7 +7,7 @@ import { axios } from '../App';
 
 import './Journal.css';
 
-const saveChanges = _.debounce(quill => {
+const updateContent = _.debounce(quill => {
   const contents = quill.getContents();
   const bookId = getRoutePathEnd();
 
@@ -20,7 +20,7 @@ const saveChanges = _.debounce(quill => {
 class Journal extends Component {
   constructor(props) {
     super(props);
-    this.state = { book: null };
+    this.state = { book: undefined, rating: undefined };
   }
 
   componentDidMount() {
@@ -38,15 +38,51 @@ class Journal extends Component {
           quill.setContents(entry.contents);
         }
 
-        quill.on('text-change', () => {
-          saveChanges(quill);
-        });
+        quill.on('text-change', () => updateContent(quill));
       })
       .catch();
 
     axios.get(`/api/books/${bookId}`).then(res => {
       this.setState({ book: res.data });
     });
+
+    axios.get(`/user/entries/${bookId}`).then(res => {
+      if (res.data) {
+        this.setState({ rating: res.data.rating });
+      }
+    });
+  }
+
+  ratingStars() {
+    const savedRating = this.state.rating;
+
+    return _.times(5, rating => {
+      const active = rating === savedRating ? 'active' : '';
+      const className = `rating-star ${active}`;
+
+      return (
+        <span
+          key={rating}
+          className={className}
+          onClick={this.getRateBook(rating)}
+        >
+          ★
+        </span>
+      );
+    });
+  }
+
+  getRateBook(rating) {
+    return () => {
+      this.setState({ rating });
+
+      const bookId = getRoutePathEnd();
+
+      axios
+        .put('/user/entries', { bookId, rating })
+        .then()
+        .catch();
+    };
   }
 
   render() {
@@ -62,7 +98,13 @@ class Journal extends Component {
               {this.state.book && this.state.book.author_name}
             </div>
 
-            <div className="journal-book-rating">★★★★★</div>
+            <div
+              className={
+                'journal-book-rating ' + (this.state.rating && 'rated')
+              }
+            >
+              {this.state.book && this.ratingStars()}
+            </div>
 
             <div className="journal-entry-author">Ricky L.</div>
           </div>

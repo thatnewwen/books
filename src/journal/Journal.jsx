@@ -43,13 +43,13 @@ class Journal extends Component {
       .catch();
 
     axios.get(`/api/books/${bookId}`).then(res => {
-      this.setState({ book: res.data });
+      const book = res.data || null;
+      this.setState({ book });
     });
 
     axios.get(`/user/entries/${bookId}`).then(res => {
-      if (res.data) {
-        this.setState({ rating: res.data.rating });
-      }
+      const rating = res.data || null;
+      this.setState({ rating });
     });
   }
 
@@ -86,16 +86,20 @@ class Journal extends Component {
   }
 
   render() {
-    return (
-      <div>
+    let journalHeading;
+
+    if (this.state.book === null) {
+      journalHeading = <div> Book not found. </div>;
+    } else if (this.state.book === undefined) {
+      journalHeading = <div> Loading... </div>;
+    } else {
+      journalHeading = (
         <div className="journal-heading">
           <div className="journal-book-info">
-            <div className="journal-book-title">
-              {this.state.book && this.state.book.title}
-            </div>
+            <div className="journal-book-title">{this.state.book.title}</div>
 
             <div className="journal-book-author">
-              {this.state.book && this.state.book.author_name}
+              {this.state.book.author_name}
             </div>
 
             <div
@@ -103,7 +107,7 @@ class Journal extends Component {
                 'journal-book-rating ' + (this.state.rating && 'rated')
               }
             >
-              {this.state.book && this.ratingStars()}
+              {this.ratingStars()}
             </div>
 
             <div className="journal-entry-author">Ricky L.</div>
@@ -111,6 +115,12 @@ class Journal extends Component {
 
           <div className="journal-book-cover" />
         </div>
+      );
+    }
+
+    return (
+      <div>
+        {journalHeading}
 
         <div id="journal-editor" className="journal-editor">
           Tell us what you thought...

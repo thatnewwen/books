@@ -36,6 +36,7 @@ class Search extends Component {
           className="search-input input"
           type="search"
           placeholder="Search for a book…"
+          autoFocus="true"
           onChange={this.searchBooks}
         />
 

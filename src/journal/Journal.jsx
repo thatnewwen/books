@@ -30,6 +30,8 @@ class Journal extends Component {
     });
     const bookId = getRoutePathEnd();
 
+    quill.focus();
+
     axios
       .get(`/user/entries/${bookId}`)
       .then(res => {

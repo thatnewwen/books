@@ -23,3 +23,12 @@ $text-4: 18px;
 $text-3: 16px;
 $text-2: 14px;
 $text-1: 12px;
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

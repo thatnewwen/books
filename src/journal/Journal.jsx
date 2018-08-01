@@ -36,6 +36,7 @@ class Journal extends Component {
 
         if (entry) {
           quill.setContents(entry.contents);
+          this.setState({ rating: entry.rating });
         }
 
         quill.on('text-change', () => updateContent(quill));
@@ -45,11 +46,6 @@ class Journal extends Component {
     axios.get(`/api/books/${bookId}`).then(res => {
       const book = res.data || null;
       this.setState({ book });
-    });
-
-    axios.get(`/user/entries/${bookId}`).then(res => {
-      const rating = res.data || null;
-      this.setState({ rating });
     });
   }
 
@@ -86,27 +82,21 @@ class Journal extends Component {
   }
 
   render() {
+    const { book, rating } = this.state;
+
     let journalHeading;
 
-    if (this.state.book === null) {
-      journalHeading = <div> Book not found. </div>;
-    } else if (this.state.book === undefined) {
-      journalHeading = <div> Loading... </div>;
+    if (book === null) {
+      journalHeading = <div className="loading-large"> Book not found. </div>;
+    } else if (book === undefined) {
+      journalHeading = <div className="loading-large"> Loading... </div>;
     } else {
       journalHeading = (
         <div className="journal-heading">
           <div className="journal-book-info">
-            <div className="journal-book-title">{this.state.book.title}</div>
-
-            <div className="journal-book-author">
-              {this.state.book.author_name}
-            </div>
-
-            <div
-              className={
-                'journal-book-rating ' + (this.state.rating && 'rated')
-              }
-            >
+            <div className="journal-book-title">{book.title}</div>
+            <div className="journal-book-author">{book.author_name}</div>
+            <div className={'journal-book-rating ' + (rating && 'rated')}>
               {this.ratingStars()}
             </div>
 

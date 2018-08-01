@@ -29,7 +29,7 @@ class Profile extends Component {
 
   render() {
     if (!this.state.isLoaded) {
-      return <div className="profile-header"> Loading... </div>;
+      return <div className="loading-large"> Loading... </div>;
     }
 
     return (

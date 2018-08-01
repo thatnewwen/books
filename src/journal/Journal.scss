@@ -38,9 +38,12 @@
     cursor: pointer;
   }
 
-  .rating-star.active ~ .rating-star,
   .rating-star:hover ~ .rating-star {
     color: $grey;
+  }
+
+  .rating-star.active ~ .rating-star {
+    color: $dark;
   }
 }
 

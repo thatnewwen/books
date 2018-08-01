@@ -87,6 +87,10 @@
   em {
     font-style: italic;
   }
+
+  .ql-editor.ql-blank::before {
+    font-style: normal;
+  }
 }
 
 .ql-editor {

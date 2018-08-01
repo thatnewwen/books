@@ -26,6 +26,7 @@ class Journal extends Component {
   componentDidMount() {
     const quill = new Quill('#journal-editor', {
       theme: 'bubble',
+      placeholder: 'Tell us what you thought...',
     });
     const bookId = getRoutePathEnd();
 
@@ -112,9 +113,7 @@ class Journal extends Component {
       <div>
         {journalHeading}
 
-        <div id="journal-editor" className="journal-editor">
-          Tell us what you thought...
-        </div>
+        <div id="journal-editor" className="journal-editor" />
       </div>
     );
   }

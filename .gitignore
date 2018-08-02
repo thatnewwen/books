@@ -3,3 +3,4 @@
 /packages/*
 /build/*
 src/**/*.css
+*ol_dump*.txt

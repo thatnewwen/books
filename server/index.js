@@ -17,7 +17,9 @@ app.use(passport.initialize());
 
 module.exports = { app, api, user, auth };
 
-require('./samples.js');
+// require('./import-books.js');
+
+require('./create-sample-user.js');
 require('./routes/auth.js');
 require('./routes/profile.js');
 require('./routes/books.js');

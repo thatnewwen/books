@@ -24,6 +24,9 @@ class Journal extends Component {
   }
 
   componentDidMount() {
+    // Always start writing at top of screen
+    window.scrollTo(0, 0);
+
     const quill = new Quill('#journal-editor', {
       theme: 'bubble',
       placeholder: 'Tell us what you thought...',

@@ -20,7 +20,7 @@ api.get('/books', (req, res) => {
   }
 
   Books.find(query)
-    .limit(20)
+    .limit(200)
     .then(books => {
       res.json(books);
     });
